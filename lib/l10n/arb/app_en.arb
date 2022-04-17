@@ -5,6 +5,6 @@
     "teamsTabLabel": "TEAMS",
     "decksTabLabel": "DECKS",
     "lostConnectionSemanticsLabel": "No connection",
-    "lostConnectionDialogMessage": "¡Ups! You are offline 🙁",
+    "lostConnectionDialogMessage": "Ups! You are offline 🙁",
     "connectionRetrievedMessage": "Connection retrieved!"
 }
