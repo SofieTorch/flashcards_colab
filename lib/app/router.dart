@@ -8,11 +8,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class AppRouter {
   final ConnectivityBloc connectivityBloc = ConnectivityBloc(Connectivity());
 
+  static const String home = '/';
+  static const String signIn = '/signin';
+
   /// Maps a given route to its corresponding page, initializing
   /// the necessary bloc providers for the page.
   Route onGenerateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
-      case '/signin':
+      case signIn:
         return MaterialPageRoute<Widget>(
           builder: (_) {
             return BlocProvider<ConnectivityBloc>.value(
@@ -21,7 +24,7 @@ class AppRouter {
             );
           },
         );
-      case '/':
+      case home:
       default:
         return MaterialPageRoute<Widget>(
           builder: (_) {
