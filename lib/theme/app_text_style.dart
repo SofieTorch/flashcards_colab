@@ -5,17 +5,17 @@ import 'package:google_fonts/google_fonts.dart';
 abstract class _AppFontWeight {
   static const FontWeight regular = FontWeight.w400;
   static const FontWeight medium = FontWeight.w500;
-  static const FontWeight semibold = FontWeight.w600;
+  static const FontWeight semibold = FontWeight.w700;
 }
 
 abstract class AppTextStyle {
-  static final _bodyTextStyle = GoogleFonts.nunitoSans(
+  static final _bodyTextStyle = GoogleFonts.inter(
     color: AppColors.mirage,
     fontSize: 15,
     fontWeight: _AppFontWeight.regular,
   );
 
-  static final _headerTextStyle = GoogleFonts.raleway(
+  static final _headerTextStyle = GoogleFonts.poppins(
     color: AppColors.mirage,
     fontSize: 18,
     fontWeight: _AppFontWeight.semibold,

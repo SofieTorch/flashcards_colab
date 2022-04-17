@@ -1,7 +1,10 @@
 {
     "@@locale": "en",
-    "counterAppBarTitle": "Counter",
-    "@counterAppBarTitle": {
-        "description": "Text shown in the AppBar of the Counter Page"
-    }
+    "appbarTitle": "Flashcards colab",
+    "studyTabLabel": "STUDY",
+    "teamsTabLabel": "TEAMS",
+    "decksTabLabel": "DECKS",
+    "lostConnectionSemanticsLabel": "No connection",
+    "lostConnectionDialogMessage": "¡Ups! You are offline 🙁",
+    "connectionRetrievedMessage": "Connection retrieved!"
 }

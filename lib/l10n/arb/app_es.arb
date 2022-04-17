@@ -1,7 +1,10 @@
 {
     "@@locale": "es",
-    "counterAppBarTitle": "Contador",
-    "@counterAppBarTitle": {
-        "description": "Texto mostrado en la AppBar de la página del contador"
-    }
+    "appbarTitle": "Flashcards colab",
+    "studyTabLabel": "ESTUDIAR",
+    "teamsTabLabel": "EQUIPOS",
+    "decksTabLabel": "MAZOS",
+    "lostConnectionSemanticsLabel": "Sin conexión",
+    "lostConnectionDialogMessage": "¡Ups! Te quedaste sin conexión 🙁",
+    "connectionRetrievedMessage": "¡Conexión recuperada!"
 }

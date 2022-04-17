@@ -31,14 +31,6 @@ abstract class AppTheme {
     tabBarTheme: TabBarTheme(
       unselectedLabelColor: AppColors.indigo.shade300,
       labelColor: AppColors.indigo,
-      labelStyle: lightTextTheme.button,
-      unselectedLabelStyle: lightTextTheme.button,
-      indicator: BoxDecoration(
-        border: Border.all(
-          color: AppColors.indigo,
-          width: 4,
-        ),
-      ),
     ),
 
     elevatedButtonTheme: ElevatedButtonThemeData(
