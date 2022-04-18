@@ -4,7 +4,7 @@ abstract class AppColors {
   static const Color white = Color(0xFFF9F9FF);
   static const Color mirage = Color(0xFF181D2E);
   static const int _indigoBase = 0xFF3A05E1;
-  static const int _goldenrodBase = 0xFFFFD36E;
+  static const int _malibuBase = 0xFF6e99ff;
 
   static const indigo = MaterialColor(
     _indigoBase,
@@ -22,13 +22,25 @@ abstract class AppColors {
     },
   );
 
-  static const goldenrod = MaterialColor(
-    _goldenrodBase,
+  static const malibu = MaterialColor(
+    _malibuBase,
     <int, Color>{
-      200: Color(0xFFFFF4DB),
-      300: Color(0xFFFFE9B7),
-      400: Color(0xFFFFDE92),
-      500: Color(_goldenrodBase),
+      50: Color(0xFFE7F3FF),
+      100: Color(0xFFc7e0ff),
+      200: Color(0xFFa5cdff),
+      300: Color(0xFF87b9ff),
+      400: Color(0xFF76a9ff),
+      500: Color(_malibuBase),
+    },
+  );
+
+  static const grey = MaterialColor(
+    0xFFA7AFAF,
+    <int, Color>{
+      50: Color(0xFFeff2f2),
+      100: Color(0xFFcccece),
+      200: Color(0xFFa7afaf),
+      400: Color(0xFF677b7c),
     },
   );
 }

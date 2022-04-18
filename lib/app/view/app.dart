@@ -24,6 +24,7 @@ class _AppState extends State<App> {
       ],
       supportedLocales: AppLocalizations.supportedLocales,
       onGenerateRoute: _router.onGenerateRoute,
+      initialRoute: AppRouter.signIn,
     );
   }
 

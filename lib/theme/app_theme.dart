@@ -14,40 +14,45 @@ abstract class AppTheme {
   );
 
   static final light = ThemeData(
+    primaryTextTheme: lightTextTheme,
     textTheme: lightTextTheme,
     iconTheme: const IconThemeData(size: 32),
-
     primarySwatch: AppColors.indigo,
     backgroundColor: AppColors.white,
     scaffoldBackgroundColor: AppColors.white,
-
     appBarTheme: const AppBarTheme(
       color: AppColors.white,
       foregroundColor: AppColors.indigo,
       iconTheme: IconThemeData(color: AppColors.indigo),
       elevation: 0.5,
     ),
-
     tabBarTheme: TabBarTheme(
       unselectedLabelColor: AppColors.indigo.shade300,
       labelColor: AppColors.indigo,
+      labelStyle: lightTextTheme.button,
+      unselectedLabelStyle: lightTextTheme.button,
     ),
-
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(AppColors.indigo),
+        backgroundColor: MaterialStateProperty.all(AppColors.indigo.shade500),
         foregroundColor: MaterialStateProperty.all(AppColors.white),
         elevation: MaterialStateProperty.all(0.5),
-        shape: MaterialStateProperty.all(
-          const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(16)),
-          ),
-        ),
+        shape: MaterialStateProperty.all(const StadiumBorder()),
         padding: MaterialStateProperty.all(const EdgeInsets.all(12)),
       ),
     ),
-
-    /// shiraz 100 when it is pressed
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: ButtonStyle(
+        side: MaterialStateProperty.all(
+          BorderSide(
+            width: 1.2,
+            color: AppColors.indigo.shade500,
+          ),
+        ),
+        shape: MaterialStateProperty.all(const StadiumBorder()),
+        padding: MaterialStateProperty.all(const EdgeInsets.all(12)),
+      ),
+    ),
     textButtonTheme: TextButtonThemeData(
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.resolveWith(
@@ -64,30 +69,28 @@ abstract class AppTheme {
         ),
       ),
     ),
-
     floatingActionButtonTheme: FloatingActionButtonThemeData(
-      backgroundColor: AppColors.goldenrod.shade400,
+      backgroundColor: AppColors.malibu.shade400,
       foregroundColor: AppColors.white,
     ),
-
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: AppColors.goldenrod.shade200,
+      fillColor: AppColors.grey.shade50,
       enabledBorder: OutlineInputBorder(
         borderSide: const BorderSide(color: Colors.transparent),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(16),
       ),
       focusedBorder: OutlineInputBorder(
         borderSide: const BorderSide(color: Colors.transparent),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(16),
       ),
       contentPadding: const EdgeInsets.symmetric(
         vertical: 10,
         horizontal: 14,
       ),
-      suffixIconColor: AppColors.goldenrod,
+      suffixIconColor: AppColors.malibu,
       hintStyle: AppTextStyle.subtitle1.copyWith(
-        color: AppColors.goldenrod.shade300,
+        color: AppColors.grey.shade400,
       ),
     ),
   );
