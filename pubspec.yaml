@@ -10,15 +10,19 @@ dependencies:
   appwrite: ^4.0.2
   bloc: ^8.0.3
   connectivity_plus: ^2.3.0
+  equatable: ^2.0.3
   flutter:
     sdk: flutter
   flutter_bloc: ^8.0.1
   flutter_localizations:
     sdk: flutter
   flutter_svg: ^1.0.3
+  form_validator: ^1.0.2
+  formz: ^0.4.1
   google_fonts: ^2.3.1
   intl: ^0.17.0
   material_design_icons_flutter: ^5.0.6595
+  shared_preferences: ^2.0.13
 
 dev_dependencies:
   bloc_test: ^9.0.3
