@@ -1,4 +1,3 @@
-import 'package:flashcards_colab/app/app.dart';
 import 'package:flashcards_colab/data/repositories/authentication_repository.dart';
 import 'package:flashcards_colab/sign_in/sign_in.dart';
 import 'package:flutter/material.dart';

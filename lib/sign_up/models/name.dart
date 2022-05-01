@@ -10,7 +10,7 @@ class Name extends FormzInput<String, NameValidationError> {
   NameValidationError? validator(String? value) {
     NameValidationError? error;
 
-    value?.isNotEmpty == true
+    value?.trim().isNotEmpty == true
         ? error = error
         : error = NameValidationError.empty;
 

@@ -37,26 +37,33 @@ class AuthenticationRepository {
     required String password,
     required String name,
   }) async {
-    final appwriteUser = await appwriteAccount.create(
-      userId: 'unique()',
-      email: email,
-      password: password,
-      name: name,
-    );
+    try {
+      final appwriteUser = await appwriteAccount.create(
+        userId: 'unique()',
+        email: email,
+        password: password,
+        name: name,
+      );
 
-    final database = Database(appwriteClient);
+      await signIn(email: email, password: password);
+      final database = Database(appwriteClient);
 
-    await database.createDocument(
-      collectionId: '[COLLECTION_ID]',
-      documentId: '[DOCUMENT_ID]',
-      data: <String, dynamic>{
-        'name': appwriteUser.name,
-        'user_id': appwriteUser.$id,
-        'mail': appwriteUser.email,
-      },
-    );
+      await database.createDocument(
+        collectionId: '6259bbbe3b78956c7d7b',
+        documentId: 'unique()',
+        write: <String>['user:${appwriteUser.$id}'],
+        read: <String>['user:${appwriteUser.$id}'],
+        data: <String, dynamic>{
+          'name': appwriteUser.name,
+          'user_id': appwriteUser.$id,
+          'mail': appwriteUser.email,
+        },
+      );
 
-    return appwriteUser.toUser;
+      return appwriteUser.toUser;
+    } on AppwriteException catch (e) {
+      throw SignUpFailure.fromType(e.type!);
+    }
   }
 
   Future<void> signIn({

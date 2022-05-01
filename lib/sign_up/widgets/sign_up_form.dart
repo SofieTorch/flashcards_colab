@@ -58,6 +58,7 @@ class SignUpForm extends StatelessWidget {
   }
 
   String _getErrorMessage(SignUpFailure? failure, AppLocalizations l10n) {
+    if (failure is AccountAlreadyExistsFailure) return 'User already exists';
     return l10n.authUnexpectedFailure;
   }
 }
@@ -146,7 +147,7 @@ class _ConfirmedPasswordInput extends StatelessWidget {
     final l10n = context.l10n;
     return BlocBuilder<SignUpBloc, SignUpState>(
       buildWhen: (previous, current) =>
-          previous.password != current.password ||
+          // previous.password != current.password ||
           previous.confirmedPassword != current.confirmedPassword,
       builder: (context, state) {
         return TextField(
