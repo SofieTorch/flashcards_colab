@@ -6,5 +6,16 @@
     "decksTabLabel": "DECKS",
     "lostConnectionSemanticsLabel": "No connection",
     "lostConnectionDialogMessage": "Ups! You are offline 🙁",
-    "connectionRetrievedMessage": "Connection retrieved!"
+    "connectionRetrievedMessage": "Connection retrieved!",
+    "signInWelcomeHeader": "Welcome!",
+    "signInMessageHeader": "Please sign in to start",
+    "signInEmailLabel": "E-mail",
+    "signInPasswordLabel": "Password",
+    "signInButtonText": "SIGN IN",
+    "signInToSignUpButtonText": "Don't have an account yet? Sign up",
+    "signInEmailInvalidMessage": "Invalid e-mail",
+    "signInPasswordEmptyMessage": "Password must not be empty",
+    "signInPasswordLengthMessage": "Password must have at least 8 characters",
+    "authInvalidCredentialsFailure": "Check your email or password again!",
+    "authUnexpectedFailure": "Ups! An unexpected error has ocurred."
 }

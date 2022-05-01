@@ -6,5 +6,16 @@
     "decksTabLabel": "MAZOS",
     "lostConnectionSemanticsLabel": "Sin conexión",
     "lostConnectionDialogMessage": "¡Ups! Te quedaste sin conexión 🙁",
-    "connectionRetrievedMessage": "¡Conexión recuperada!"
+    "connectionRetrievedMessage": "¡Conexión recuperada!",
+    "signInWelcomeHeader": "¡Bienvenido/a!",
+    "signInMessageHeader": "Inicia sesión para continuar",
+    "signInEmailLabel": "Correo electrónico",
+    "signInPasswordLabel": "Contraseña",
+    "signInButtonText": "INICIAR SESIÓN",
+    "signInToSignUpButtonText": "¿Aún no tienes una cuenta? Regístrate",
+    "signInEmailInvalidMessage": "Correo inválido",
+    "signInPasswordEmptyMessage": "La contraseña no debe estar vacía",
+    "signInPasswordLengthMessage": "La contraseña debe tener al menos 8 carácteres",
+    "authInvalidCredentialsFailure": "¡Revisa tu correo o contraseña otra vez!",
+    "authUnexpectedFailure": "¡Ups! Un error inesperado ha ocurrido."
 }

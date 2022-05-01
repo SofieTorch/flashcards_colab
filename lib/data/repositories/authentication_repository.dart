@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart' as appwrite_models;
+import 'package:flashcards_colab/exceptions/exceptions.dart';
 import 'package:flashcards_colab/models/models.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -49,12 +50,18 @@ class AuthenticationRepository {
     required String email,
     required String password,
   }) async {
-    final session = await appwriteAccount.createSession(
-      email: email,
-      password: password,
-    );
-    await (await prefs).setString('sessionId', session.$id);
-    _controller.add(AuthenticationStatus.authenticated);
+    try {
+      final session = await appwriteAccount.createSession(
+        email: email,
+        password: password,
+      );
+      await (await prefs).setString('sessionId', session.$id);
+      _controller.add(AuthenticationStatus.authenticated);
+    } on AppwriteException catch (e) {
+      throw SignInFailure.fromCode(e.code!);
+    } catch (e) {
+      throw const SignInFailure();
+    }
   }
 
   Future<void> signInWithGoogle() async {
