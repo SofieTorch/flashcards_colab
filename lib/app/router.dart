@@ -1,6 +1,7 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flashcards_colab/app/app.dart';
 import 'package:flashcards_colab/connectivity/connectivity.dart';
+import 'package:flashcards_colab/profile/profile.dart';
 import 'package:flashcards_colab/sign_in/sign_in.dart';
 import 'package:flashcards_colab/sign_up/sign_up.dart';
 import 'package:flashcards_colab/splash/splash.dart';
@@ -14,6 +15,7 @@ class AppRouter {
   static const String signIn = '/signin';
   static const String signUp = '/signup';
   static const String splash = '/splash';
+  static const String profile = '/profile';
 
   /// Maps a given route to its corresponding page, initializing
   /// the necessary bloc providers for the page.
@@ -34,6 +36,15 @@ class AppRouter {
             return BlocProvider<ConnectivityBloc>.value(
               value: connectivityBloc..add(const ConnectivityRequested()),
               child: const ConnectivityListener(child: SignInPage()),
+            );
+          },
+        );
+      case profile:
+        return MaterialPageRoute<Widget>(
+          builder: (_) {
+            return BlocProvider<ConnectivityBloc>.value(
+              value: connectivityBloc..add(const ConnectivityRequested()),
+              child: const ConnectivityListener(child: ProfilePage()),
             );
           },
         );

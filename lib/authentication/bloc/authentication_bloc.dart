@@ -16,7 +16,7 @@ class AuthenticationBloc
         super(const AuthenticationState.unknown()) {
     on<AuthenticationRequested>(_onAuthenticationRequested);
     on<AuthenticationStatusChanged>(_onAuthenticationStatusChanged);
-    on<AuthenticationLogoutRequested>(_onAuthenticationLogoutRequested);
+    on<AuthLogoutRequested>(_onAuthenticationLogoutRequested);
   }
 
   final AuthenticationRepository _authRepository;
@@ -65,7 +65,7 @@ class AuthenticationBloc
   }
 
   void _onAuthenticationLogoutRequested(
-    AuthenticationLogoutRequested event,
+    AuthLogoutRequested event,
     Emitter<AuthenticationState> emit,
   ) {
     _authRepository.logOut();

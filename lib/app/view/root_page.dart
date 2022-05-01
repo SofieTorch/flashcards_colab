@@ -1,5 +1,7 @@
+import 'package:flashcards_colab/app/app.dart';
 import 'package:flashcards_colab/l10n/l10n.dart';
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class RootPage extends StatelessWidget {
   const RootPage({Key? key}) : super(key: key);
@@ -20,6 +22,18 @@ class RootPage extends StatelessWidget {
               Tab(text: l10n.decksTabLabel),
             ],
           ),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: IconButton(
+                onPressed: () => Navigator.pushNamed(
+                  context,
+                  AppRouter.profile,
+                ),
+                icon: const Icon(MdiIcons.accountCircle),
+              ),
+            )
+          ],
         ),
         body: const TabBarView(
           children: [

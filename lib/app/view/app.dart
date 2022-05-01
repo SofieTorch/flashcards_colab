@@ -61,6 +61,7 @@ class _AppViewState extends State<AppView> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
       localizationsDelegates: const [
         AppLocalizations.delegate,
