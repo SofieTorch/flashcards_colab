@@ -43,6 +43,19 @@ class AuthenticationRepository {
       password: password,
       name: name,
     );
+
+    final database = Database(appwriteClient);
+
+    await database.createDocument(
+      collectionId: '[COLLECTION_ID]',
+      documentId: '[DOCUMENT_ID]',
+      data: <String, dynamic>{
+        'name': appwriteUser.name,
+        'user_id': appwriteUser.$id,
+        'mail': appwriteUser.email,
+      },
+    );
+
     return appwriteUser.toUser;
   }
 

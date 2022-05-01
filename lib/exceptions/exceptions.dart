@@ -2,4 +2,4 @@
 library exceptions;
 
 export './sign_in_failure.dart';
-export './storage_failure.dart';
+export './sign_up_failure.dart';
