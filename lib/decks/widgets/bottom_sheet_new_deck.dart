@@ -23,14 +23,9 @@ class _DeckTitleInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<DecksBloc, DecksState>(
-      buildWhen: (previous, current) => previous.newDeck != current.newDeck,
-      builder: (context, state) {
-        return TextField(
-          onChanged: (title) =>
-              context.read<DecksBloc>().add(NewDeckTitleChanged(title)),
-        );
-      },
+    return TextField(
+      onChanged: (title) =>
+          context.read<DecksBloc>().add(NewDeckTitleChanged(title)),
     );
   }
 }
