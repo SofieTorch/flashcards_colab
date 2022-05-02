@@ -2,7 +2,6 @@ import 'package:appwrite/appwrite.dart';
 import 'package:flashcards_colab/data/repositories/authentication_repository.dart';
 import 'package:flashcards_colab/data/repositories/decks_repository.dart';
 import 'package:flashcards_colab/decks/decks.dart';
-import 'package:flashcards_colab/decks/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -31,18 +30,7 @@ class _DecksView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        BlocBuilder<DecksBloc, DecksState>(
-          builder: (context, state) {
-            return state.status == DecksStatus.loading
-                ? const CircularProgressIndicator()
-                : ListView.builder(
-                    itemCount: state.decks.length,
-                    itemBuilder: (_, index) {
-                      return DeckListItem(state.decks[index]);
-                    },
-                  );
-          },
-        ),
+        const DeckList(),
         Positioned(
           bottom: 16,
           right: 16,
@@ -54,9 +42,6 @@ class _DecksView extends StatelessWidget {
                 child: const BottomSheetNewDeck(),
               ),
             ),
-            // onPressed: () => context.read<DecksBloc>()
-            //   ..add(const NewDeckTitleChanged('title'))
-            //   ..add(const NewDeckCreated()),
             child: const Icon(MdiIcons.plus),
           ),
         )

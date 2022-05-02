@@ -71,7 +71,10 @@ class DecksBloc extends Bloc<DecksEvent, DecksState> {
     // try {
     emit(state.copyWith(newDeckStatus: NewDeckStatus.inProgress));
     await _decksRepository.createPersonalDeck(state.newDeck.title);
-    emit(state.copyWith(newDeckStatus: NewDeckStatus.success));
+    emit(state.copyWith(
+      newDeckStatus: NewDeckStatus.success,
+      status: DecksStatus.initial,
+    ));
     add(DecksRequested());
     // } catch (e) {
     //   emit(state.copyWith(newDeckStatus: NewDeckStatus.failure));
