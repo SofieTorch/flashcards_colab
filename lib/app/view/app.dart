@@ -33,8 +33,15 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider.value(
-      value: authRepository,
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider.value(
+          value: authRepository,
+        ),
+        RepositoryProvider.value(
+          value: appwriteClient,
+        ),
+      ],
       child: BlocProvider<AuthenticationBloc>(
         create: (_) => AuthenticationBloc(
           authenticationRepository: authRepository,

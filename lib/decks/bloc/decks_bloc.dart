@@ -12,6 +12,8 @@ class DecksBloc extends Bloc<DecksEvent, DecksState> {
   })  : _decksRepository = decksRepository,
         super(const DecksState()) {
     on<DecksRequested>(_onDecksRequested);
+    on<NewDeckTitleChanged>(_onNewDeckTitleChanged);
+    on<NewDeckCreated>(_onNewDeckCreated);
   }
 
   final DecksRepository _decksRepository;
@@ -51,8 +53,28 @@ class DecksBloc extends Bloc<DecksEvent, DecksState> {
     }
   }
 
-  Future<void> _onDeckCreated(
-    DeckCreated event,
+  void _onNewDeckTitleChanged(
+    NewDeckTitleChanged event,
     Emitter<DecksState> emit,
-  ) async {}
+  ) {
+    emit(
+      state.copyWith(
+        newDeck: state.newDeck.copyWith(title: event.title),
+      ),
+    );
+  }
+
+  Future<void> _onNewDeckCreated(
+    NewDeckCreated event,
+    Emitter<DecksState> emit,
+  ) async {
+    // try {
+    emit(state.copyWith(newDeckStatus: NewDeckStatus.inProgress));
+    await _decksRepository.createPersonalDeck(state.newDeck.title);
+    emit(state.copyWith(newDeckStatus: NewDeckStatus.success));
+    add(DecksRequested());
+    // } catch (e) {
+    //   emit(state.copyWith(newDeckStatus: NewDeckStatus.failure));
+    // }
+  }
 }

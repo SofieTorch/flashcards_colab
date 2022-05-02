@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart' as appwrite_models;
 import 'package:flashcards_colab/models/models.dart';
@@ -10,17 +12,17 @@ class DecksRepository {
 
   final Client awClient;
   final Database database;
-  final User currentUser;
+  final FutureOr<User> currentUser;
 
   Future<void> createPersonalDeck(String title) async {
     await database.createDocument(
       collectionId: '6259f91677c38039713e',
       documentId: 'unique()',
-      write: <String>['user:${currentUser.id}'],
-      read: <String>['user:${currentUser.id}'],
+      write: <String>['user:${(await currentUser).id}'],
+      read: <String>['user:${(await currentUser).id}'],
       data: <String, dynamic>{
         'name': title,
-        'created_at': DateTime.now(),
+        'created_at': DateTime.now().millisecondsSinceEpoch,
       },
     );
   }

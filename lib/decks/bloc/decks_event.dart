@@ -9,11 +9,15 @@ abstract class DecksEvent extends Equatable {
 
 class DecksRequested extends DecksEvent {}
 
-class DeckCreated extends DecksEvent {
-  const DeckCreated(this.title);
+class NewDeckTitleChanged extends DecksEvent {
+  const NewDeckTitleChanged(this.title);
 
   final String title;
 
   @override
   List<Object> get props => [title];
+}
+
+class NewDeckCreated extends DecksEvent {
+  const NewDeckCreated();
 }
