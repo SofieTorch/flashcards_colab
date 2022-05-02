@@ -43,6 +43,7 @@ extension on appwrite_models.Document {
   Deck get toDeck {
     return Deck(
       title: data['name'] as String,
+      cardsCount: data['cards_count'] as int,
       id: $id,
     );
   }
