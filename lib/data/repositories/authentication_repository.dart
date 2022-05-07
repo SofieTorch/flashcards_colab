@@ -50,13 +50,12 @@ class AuthenticationRepository {
 
       await database.createDocument(
         collectionId: '6259bbbe3b78956c7d7b',
-        documentId: 'unique()',
+        documentId: appwriteUser.$id,
         write: <String>['user:${appwriteUser.$id}'],
         read: <String>['user:${appwriteUser.$id}'],
         data: <String, dynamic>{
           'name': appwriteUser.name,
-          'user_id': appwriteUser.$id,
-          'mail': appwriteUser.email,
+          'email': appwriteUser.email,
         },
       );
 

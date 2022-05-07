@@ -24,8 +24,8 @@ class _AppState extends State<App> {
   @override
   void initState() {
     appwriteClient
-        .setEndpoint('http://192.168.43.117:8080/v1')
-        .setProject('6258b5fa4c4df1f577d4');
+        .setEndpoint('http://206.189.103.151/v1')
+        .setProject('6274b16cd74997d3eff3');
 
     authRepository = AuthenticationRepository(appwriteClient: appwriteClient);
     super.initState();
