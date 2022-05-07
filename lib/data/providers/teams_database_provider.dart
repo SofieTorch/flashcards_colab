@@ -15,7 +15,10 @@ class TeamsDatabaseProvider {
     return database.createDocument(
       collectionId: _collectionId,
       documentId: id,
-      data: <String, dynamic>{},
+      data: <String, dynamic>{
+        'name': name,
+        'description': description,
+      },
       write: <String>['team:$id'],
       read: <String>['team:$id'],
     );

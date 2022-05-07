@@ -13,10 +13,11 @@ class DecksRepository {
   final Client awClient;
   final Database database;
   final FutureOr<User> currentUser;
+  final String collectionId = '6274b3a4b5a85ff61130';
 
   Future<void> createPersonalDeck(String title) async {
     await database.createDocument(
-      collectionId: '6259f91677c38039713e',
+      collectionId: collectionId,
       documentId: 'unique()',
       write: <String>['user:${(await currentUser).id}'],
       read: <String>['user:${(await currentUser).id}'],
@@ -29,7 +30,7 @@ class DecksRepository {
 
   Future<List<Deck>> getPersonalDecks({int limit = 10, int offset = 0}) async {
     final deckDocs = await database.listDocuments(
-      collectionId: '6259f91677c38039713e',
+      collectionId: collectionId,
       limit: limit,
       offset: offset,
     );

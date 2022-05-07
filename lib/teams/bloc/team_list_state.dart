@@ -31,5 +31,5 @@ class TeamListState extends Equatable {
   }
 
   @override
-  List<Object> get props => [teams, status];
+  List<Object> get props => [teams, status, newTeam, newTeamStatus];
 }

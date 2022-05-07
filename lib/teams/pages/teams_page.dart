@@ -34,25 +34,30 @@ class _TeamsView extends StatelessWidget {
           );
         }
         if (state.status == TeamListStatus.success) {
-          if (state.teams.isEmpty) {
-            return const Center(
-              child: Text('No teams yet'),
-            );
-          }
-
           return Stack(
             children: [
-              ListView.builder(
-                itemCount: state.teams.length,
-                itemBuilder: (context, index) {
-                  return Text(state.teams[index].name);
-                },
-              ),
+              if (state.teams.isEmpty)
+                const Center(
+                  child: Text('No teams yet'),
+                )
+              else
+                ListView.builder(
+                  itemCount: state.teams.length,
+                  itemBuilder: (context, index) {
+                    return Text(state.teams[index].name);
+                  },
+                ),
               Positioned(
                 bottom: 16,
                 right: 16,
                 child: FloatingActionButton(
-                  onPressed: () {},
+                  onPressed: () => showModalBottomSheet<Widget>(
+                    context: context,
+                    builder: (_) => BlocProvider<TeamListBloc>.value(
+                      value: BlocProvider.of<TeamListBloc>(context),
+                      child: const BottomSheetNewTeam(),
+                    ),
+                  ),
                   child: const Icon(MdiIcons.plus),
                 ),
               ),
