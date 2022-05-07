@@ -11,6 +11,18 @@ class Team extends Equatable {
   final String description;
   final String id;
 
+  Team copyWith({
+    String? name,
+    String? description,
+    String? id,
+  }) {
+    return Team(
+      name: name ?? this.name,
+      description: description ?? this.description,
+      id: id ?? this.id,
+    );
+  }
+
   @override
   List<Object?> get props => [name, description, id];
 }

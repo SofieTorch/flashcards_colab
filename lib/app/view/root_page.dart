@@ -1,6 +1,7 @@
 import 'package:flashcards_colab/app/app.dart';
 import 'package:flashcards_colab/decks/decks.dart';
 import 'package:flashcards_colab/l10n/l10n.dart';
+import 'package:flashcards_colab/teams/teams.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
@@ -39,7 +40,7 @@ class RootPage extends StatelessWidget {
         body: const TabBarView(
           children: [
             Icon(Icons.directions_car),
-            Icon(Icons.directions_transit),
+            TeamsPage(),
             DecksPage(),
           ],
         ),

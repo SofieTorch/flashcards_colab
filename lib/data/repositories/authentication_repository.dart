@@ -18,6 +18,7 @@ class AuthenticationRepository {
   final FutureOr<SharedPreferences> prefs;
   final Account appwriteAccount;
   final _controller = StreamController<AuthenticationStatus>();
+  final _userCollectionId = '6274b373afa07eaee9c0';
 
   Stream<AuthenticationStatus> get status async* {
     yield* _controller.stream;
@@ -49,7 +50,7 @@ class AuthenticationRepository {
       final database = Database(appwriteClient);
 
       await database.createDocument(
-        collectionId: '6259bbbe3b78956c7d7b',
+        collectionId: _userCollectionId,
         documentId: appwriteUser.$id,
         write: <String>['user:${appwriteUser.$id}'],
         read: <String>['user:${appwriteUser.$id}'],

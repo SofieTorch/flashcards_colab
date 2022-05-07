@@ -5,7 +5,7 @@ import 'package:flashcards_colab/data/providers/teams_provider.dart';
 import 'package:flashcards_colab/models/models.dart';
 
 class TeamsRepository {
-  TeamsRepository(this.client)
+  TeamsRepository({required this.client})
       : _databaseProvider = TeamsDatabaseProvider(Database(client)),
         _teamsProvider = TeamsProvider(client: client);
 
