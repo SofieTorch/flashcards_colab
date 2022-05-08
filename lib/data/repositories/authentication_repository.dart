@@ -92,7 +92,11 @@ class AuthenticationRepository {
 
   Future<void> logOut() async {
     final sessionId = (await prefs).getString('sessionId');
-    await appwriteAccount.deleteSession(sessionId: sessionId!);
+    try {
+      await appwriteAccount.deleteSession(sessionId: sessionId!);
+    } catch (e) {
+      await appwriteAccount.deleteSessions();
+    }
 
     _controller.add(AuthenticationStatus.unauthenticated);
   }

@@ -34,8 +34,22 @@ class TeamsRepository {
     return teams;
   }
 
+  Future<Team> getTeam(String teamId) async {
+    final teamDoc = await _databaseProvider.getTeam(teamId);
+    return teamDoc.toTeam;
+  }
+
   Future<void> addMember(String teamId, String email) =>
       _teamsProvider.createMembership(teamId: teamId, email: email);
+
+  Future<void> joinTeam(Membership membership) async {
+    await _teamsProvider.updateMembershipStatus(
+      teamId: membership.teamId,
+      membershipId: membership.membershipId,
+      userId: membership.userId,
+      secret: membership.secret,
+    );
+  }
 }
 
 extension on appwrite_models.Document {

@@ -17,6 +17,7 @@ class AuthenticationBloc
     on<AuthenticationRequested>(_onAuthenticationRequested);
     on<AuthenticationStatusChanged>(_onAuthenticationStatusChanged);
     on<AuthLogoutRequested>(_onAuthenticationLogoutRequested);
+    on<VerifyAuthRequested>(_onVerifyAuthenticationRequested);
   }
 
   final AuthenticationRepository _authRepository;
@@ -33,13 +34,7 @@ class AuthenticationBloc
     AuthenticationRequested event,
     Emitter<AuthenticationState> emit,
   ) async {
-    final user = await _authRepository.currentUser;
-    emit(
-      user.isNotEmpty
-          ? AuthenticationState.authenticated(user)
-          : const AuthenticationState.unauthenticated(),
-    );
-
+    add(VerifyAuthRequested());
     _authStatusSubscription = _authRepository.status.listen(
       (status) => add(AuthenticationStatusChanged(status)),
     );
@@ -69,5 +64,17 @@ class AuthenticationBloc
     Emitter<AuthenticationState> emit,
   ) {
     _authRepository.logOut();
+  }
+
+  Future<void> _onVerifyAuthenticationRequested(
+    VerifyAuthRequested event,
+    Emitter<AuthenticationState> emit,
+  ) async {
+    final user = await _authRepository.currentUser;
+    emit(
+      user.isNotEmpty
+          ? AuthenticationState.authenticated(user)
+          : const AuthenticationState.unauthenticated(),
+    );
   }
 }

@@ -20,7 +20,7 @@ class TeamsDatabaseProvider {
         'description': description,
       },
       write: <String>['team:$id'],
-      read: <String>['team:$id'],
+      read: <String>['team:$id', 'role:all'],
     );
   }
 

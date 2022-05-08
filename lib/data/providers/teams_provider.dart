@@ -23,7 +23,21 @@ class TeamsProvider {
       teamId: teamId,
       email: email,
       roles: <String>['member'],
-      url: 'http://206.189.103.151/create-membership',
+      url: 'http://206.189.103.151/join',
+    );
+  }
+
+  Future<void> updateMembershipStatus({
+    required String teamId,
+    required String membershipId,
+    required String userId,
+    required String secret,
+  }) async {
+    await teams.updateMembershipStatus(
+      teamId: teamId,
+      membershipId: membershipId,
+      userId: userId,
+      secret: secret,
     );
   }
 
