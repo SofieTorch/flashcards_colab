@@ -22,7 +22,7 @@ class TeamsProvider {
     await teams.createMembership(
       teamId: teamId,
       email: email,
-      roles: <String>['member'],
+      roles: <String>['owner'],
       url: 'http://206.189.103.151/join',
     );
   }

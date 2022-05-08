@@ -22,25 +22,25 @@ class JoinTeamBloc extends Bloc<JoinTeamEvent, JoinTeamState> {
     TeamRequested event,
     Emitter<JoinTeamState> emit,
   ) async {
-    // try {
-    emit(state.copyWith(teamStatus: RetrieveTeamStatus.inProgress));
-    final team = await _teamsRepository.getTeam(state.membership.teamId);
-    emit(state.copyWith(team: team, teamStatus: RetrieveTeamStatus.success));
-    // } catch (e) {
-    //   emit(state.copyWith(teamStatus: RetrieveTeamStatus.failure));
-    // }
+    try {
+      emit(state.copyWith(teamStatus: RetrieveTeamStatus.inProgress));
+      final team = await _teamsRepository.getTeam(state.membership.teamId);
+      emit(state.copyWith(team: team, teamStatus: RetrieveTeamStatus.success));
+    } catch (e) {
+      emit(state.copyWith(teamStatus: RetrieveTeamStatus.failure));
+    }
   }
 
   Future<void> _onTeamInvitationAccepted(
     TeamInvitationAccepted event,
     Emitter<JoinTeamState> emit,
   ) async {
-    try {
-      emit(state.copyWith(status: JoinTeamStatus.inProgress));
-      await _teamsRepository.joinTeam(state.membership);
-      emit(state.copyWith(status: JoinTeamStatus.success));
-    } catch (e) {
-      emit(state.copyWith(status: JoinTeamStatus.failure));
-    }
+    // try {
+    emit(state.copyWith(status: JoinTeamStatus.inProgress));
+    await _teamsRepository.joinTeam(state.membership);
+    emit(state.copyWith(status: JoinTeamStatus.success));
+    // } catch (e) {
+    //   emit(state.copyWith(status: JoinTeamStatus.failure));
+    // }
   }
 }
