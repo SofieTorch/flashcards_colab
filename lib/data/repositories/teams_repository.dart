@@ -33,6 +33,9 @@ class TeamsRepository {
 
     return teams;
   }
+
+  Future<void> addMember(String teamId, String email) =>
+      _teamsProvider.createMembership(teamId: teamId, email: email);
 }
 
 extension on appwrite_models.Document {

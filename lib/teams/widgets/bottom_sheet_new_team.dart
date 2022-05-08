@@ -7,15 +7,19 @@ class BottomSheetNewTeam extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: const [
-        Text('Name:'),
-        _TeamNameInput(),
-        Text('Description:'),
-        _TeamDescriptionInput(),
-        _CreateTeamButtom(),
-      ],
+    final mediaQueryData = MediaQuery.of(context);
+    return Padding(
+      padding: mediaQueryData.viewInsets,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: const [
+          Text('Name:'),
+          _TeamNameInput(),
+          Text('Description:'),
+          _TeamDescriptionInput(),
+          _CreateTeamButtom(),
+        ],
+      ),
     );
   }
 }

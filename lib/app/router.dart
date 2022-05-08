@@ -16,6 +16,7 @@ class AppRouter {
   static const String signUp = '/signup';
   static const String splash = '/splash';
   static const String profile = '/profile';
+  static const String membership = '/create-membership';
 
   /// Maps a given route to its corresponding page, initializing
   /// the necessary bloc providers for the page.
@@ -49,6 +50,7 @@ class AppRouter {
           },
         );
       case splash:
+      case membership:
         return MaterialPageRoute<Widget>(
           builder: (_) {
             return BlocProvider<ConnectivityBloc>.value(

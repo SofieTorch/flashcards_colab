@@ -15,6 +15,18 @@ class TeamsProvider {
     return teamList.teams;
   }
 
+  Future<void> createMembership({
+    required String teamId,
+    required String email,
+  }) async {
+    await teams.createMembership(
+      teamId: teamId,
+      email: email,
+      roles: <String>['member'],
+      url: 'http://206.189.103.151/create-membership',
+    );
+  }
+
   Future<Team> update(String teamId, String name) {
     return teams.update(teamId: teamId, name: name);
   }

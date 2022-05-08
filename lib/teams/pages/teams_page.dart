@@ -44,7 +44,7 @@ class _TeamsView extends StatelessWidget {
                 ListView.builder(
                   itemCount: state.teams.length,
                   itemBuilder: (context, index) {
-                    return Text(state.teams[index].name);
+                    return TeamListItem(state.teams[index]);
                   },
                 ),
               Positioned(
@@ -52,6 +52,7 @@ class _TeamsView extends StatelessWidget {
                 right: 16,
                 child: FloatingActionButton(
                   onPressed: () => showModalBottomSheet<Widget>(
+                    isScrollControlled: true,
                     context: context,
                     builder: (_) => BlocProvider<TeamListBloc>.value(
                       value: BlocProvider.of<TeamListBloc>(context),
