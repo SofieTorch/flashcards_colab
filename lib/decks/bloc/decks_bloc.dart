@@ -17,6 +17,7 @@ class DecksBloc extends Bloc<DecksEvent, DecksState> {
   }
 
   final DecksRepository _decksRepository;
+  String? teamId;
 
   Future<void> _onDecksRequested(
     DecksRequested event,
@@ -25,7 +26,9 @@ class DecksBloc extends Bloc<DecksEvent, DecksState> {
     if (state.hasReachedMax) return;
     try {
       if (state.status == DecksStatus.initial) {
-        final decks = await _decksRepository.getPersonalDecks();
+        final decks = teamId == null
+            ? await _decksRepository.getPersonalDecks()
+            : await _decksRepository.getTeamDecks(teamId: teamId!);
         return emit(
           state.copyWith(
             status: DecksStatus.success,
@@ -35,9 +38,14 @@ class DecksBloc extends Bloc<DecksEvent, DecksState> {
         );
       }
 
-      final decks = await _decksRepository.getPersonalDecks(
-        offset: state.decks.length,
-      );
+      final decks = teamId == null
+          ? await _decksRepository.getPersonalDecks(
+              offset: state.decks.length,
+            )
+          : await _decksRepository.getTeamDecks(
+              teamId: teamId!,
+              offset: state.decks.length,
+            );
 
       decks.isEmpty
           ? emit(state.copyWith(hasReachedMax: true))
@@ -68,16 +76,23 @@ class DecksBloc extends Bloc<DecksEvent, DecksState> {
     NewDeckCreated event,
     Emitter<DecksState> emit,
   ) async {
-    // try {
-    emit(state.copyWith(newDeckStatus: NewDeckStatus.inProgress));
-    await _decksRepository.createPersonalDeck(state.newDeck.title);
-    emit(state.copyWith(
-      newDeckStatus: NewDeckStatus.success,
-      status: DecksStatus.initial,
-    ));
-    add(DecksRequested());
-    // } catch (e) {
-    //   emit(state.copyWith(newDeckStatus: NewDeckStatus.failure));
-    // }
+    try {
+      emit(state.copyWith(newDeckStatus: NewDeckStatus.inProgress));
+
+      await _decksRepository.createDeck(
+        title: state.newDeck.title,
+        teamId: teamId,
+      );
+
+      emit(
+        state.copyWith(
+          newDeckStatus: NewDeckStatus.success,
+          status: DecksStatus.initial,
+        ),
+      );
+      add(DecksRequested());
+    } catch (e) {
+      emit(state.copyWith(newDeckStatus: NewDeckStatus.failure));
+    }
   }
 }

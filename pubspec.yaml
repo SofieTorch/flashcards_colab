@@ -16,6 +16,7 @@ dependencies:
   flutter_bloc: ^8.0.1
   flutter_localizations:
     sdk: flutter
+  flutter_speed_dial: ^6.0.0
   flutter_svg: ^1.0.3
   form_validator: ^1.0.2
   formz: ^0.4.1
