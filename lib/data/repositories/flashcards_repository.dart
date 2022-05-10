@@ -58,11 +58,11 @@ class FlashcardsRepository {
     String? teamId,
   }) async {
     teamId == null
-        ? await createPersonalFlashcard(flashcard)
-        : await createTeamFlashcard(flashcard, teamId);
+        ? await _createPersonalFlashcard(flashcard)
+        : await _createTeamFlashcard(flashcard, teamId);
   }
 
-  Future<void> createPersonalFlashcard(Flashcard flashcard) async {
+  Future<void> _createPersonalFlashcard(Flashcard flashcard) async {
     final flashcardDoc = await _flashcardsProvider.createFlashcard(
       front: flashcard.front,
       back: flashcard.back,
@@ -76,7 +76,7 @@ class FlashcardsRepository {
     );
   }
 
-  Future<void> createTeamFlashcard(
+  Future<void> _createTeamFlashcard(
     Flashcard flashcard,
     String teamId,
   ) async {
@@ -116,6 +116,35 @@ class FlashcardsRepository {
     return flashcards;
   }
 
+  Future<List<Flashcard>> getTodayFlashcards() async {
+    final flashcards = <Flashcard>[];
+    final recallDocs = await _recallsProvider.getTodayRecalls(
+      (await currentUser)!.id,
+    );
+
+    final recalls = recallDocs.map((e) => e.toRecall).toList();
+    for (final recall in recalls) {
+      final flashcardDoc = await _flashcardsProvider.getFlashcard(
+        recall.flashcardId,
+      );
+      final flashcard = flashcardDoc.toFlashcard.copyWith(recall: recall);
+      flashcards.add(flashcard);
+    }
+
+    return flashcards;
+  }
+
+  Future<void> updateFlashcardRecall({
+    required Flashcard flashcard,
+    required int weight,
+  }) async {
+    await _recallsProvider.update(
+      flashcard.recall!.id,
+      flashcard.recall!.lastDifferenceHours,
+      weight,
+    );
+  }
+
   void dispose() {
     _controller.close();
     _flashcardsProvider.dispose();
@@ -140,6 +169,7 @@ extension on appw_models.Document {
       nextRepetition:
           DateTime.fromMillisecondsSinceEpoch(data['next_repetition'] as int),
       lastDifferenceHours: data['last_hours_interval'] as int,
+      userId: data['user'] as String,
     );
   }
 }

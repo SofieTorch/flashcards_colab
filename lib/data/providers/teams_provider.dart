@@ -20,11 +20,11 @@ class TeamsProvider {
     return membershipsList.memberships;
   }
 
-  Future<void> createMembership({
+  Future<Membership> createMembership({
     required String teamId,
     required String email,
-  }) async {
-    await teams.createMembership(
+  }) {
+    return teams.createMembership(
       teamId: teamId,
       email: email,
       roles: <String>['owner'],

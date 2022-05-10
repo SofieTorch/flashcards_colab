@@ -41,6 +41,28 @@ class RecallsProvider {
     return docs.documents[0];
   }
 
+  Future<List<Document>> getTodayRecalls(String userId) async {
+    final docs = <Document>[];
+    final today = DateTime.now();
+    final fetchedDocs = await _database.listDocuments(
+      collectionId: _collectionId,
+      queries: <dynamic>[
+        Query.equal('user', userId),
+      ],
+    );
+
+    for (final doc in fetchedDocs.documents) {
+      final nextRepetitionMiliseconds = doc.data['next_repetition'] as int;
+      final nextRepetition =
+          DateTime.fromMillisecondsSinceEpoch(nextRepetitionMiliseconds);
+      if (nextRepetition.isBefore(today)) {
+        docs.add(doc);
+      }
+    }
+
+    return docs;
+  }
+
   Future<void> create({
     required String flashcardId,
     required String userId,
@@ -62,17 +84,17 @@ class RecallsProvider {
     );
   }
 
-  Future<void> update(String id, int lastDifferenceHours, int weight) async {
-    final nextDifferenceHours =
-        _getNextDifferenceHours(lastDifferenceHours, weight);
+  Future<void> update(String id, int lastHoursInterval, int weight) async {
+    final nextHoursInterval =
+        _getNextDifferenceHours(lastHoursInterval, weight);
 
     await _database.updateDocument(
       collectionId: _collectionId,
       documentId: id,
       data: <String, dynamic>{
-        'last_hours_interval': nextDifferenceHours,
+        'last_hours_interval': nextHoursInterval,
         'next_repetition': DateTime.now().add(
-          Duration(hours: nextDifferenceHours),
+          Duration(hours: nextHoursInterval),
         ),
       },
     );

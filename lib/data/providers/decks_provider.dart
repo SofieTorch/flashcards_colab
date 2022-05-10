@@ -93,6 +93,17 @@ class DecksProvider {
     return deckDocs.documents;
   }
 
+  Future<List<Document>> getAllTeamDecks(String teamId) async {
+    final deckDocs = await _database.listDocuments(
+      collectionId: _collectionId,
+      queries: <dynamic>[
+        Query.equal('type', 'team'),
+        Query.equal('owner_id', teamId),
+      ],
+    );
+    return deckDocs.documents;
+  }
+
   void dispose() {
     _subscription.close();
   }

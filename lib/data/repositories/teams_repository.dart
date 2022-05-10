@@ -1,5 +1,8 @@
 import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart' as appwrite_models;
+import 'package:flashcards_colab/data/providers/decks_provider.dart';
+import 'package:flashcards_colab/data/providers/flashcards_provider.dart';
+import 'package:flashcards_colab/data/providers/recalls_provider.dart';
 import 'package:flashcards_colab/data/providers/teams_database_provider.dart';
 import 'package:flashcards_colab/data/providers/teams_provider.dart';
 import 'package:flashcards_colab/models/models.dart';
@@ -7,11 +10,17 @@ import 'package:flashcards_colab/models/models.dart';
 class TeamsRepository {
   TeamsRepository({required this.client})
       : _databaseProvider = TeamsDatabaseProvider(Database(client)),
-        _teamsProvider = TeamsProvider(client: client);
+        _teamsProvider = TeamsProvider(client: client),
+        _recallsProvider = RecallsProvider(client),
+        _decksProvider = DecksProvider(client: client),
+        _flashcardsProvider = FlashcardsProvider(client);
 
   final Client client;
   final TeamsDatabaseProvider _databaseProvider;
   final TeamsProvider _teamsProvider;
+  final RecallsProvider _recallsProvider;
+  final DecksProvider _decksProvider;
+  final FlashcardsProvider _flashcardsProvider;
 
   Future<void> create(Team team) async {
     final teamAccount = await _teamsProvider.create(team.name);
@@ -39,8 +48,23 @@ class TeamsRepository {
     return teamDoc.toTeam;
   }
 
-  Future<void> addMember(String teamId, String email) =>
-      _teamsProvider.createMembership(teamId: teamId, email: email);
+  Future<void> addMember(String teamId, String email) async {
+    final membership = await _teamsProvider.createMembership(
+      teamId: teamId,
+      email: email,
+    );
+    final deckDocs = await _decksProvider.getAllTeamDecks(teamId);
+    for (final deckDoc in deckDocs) {
+      final flashcards = await _flashcardsProvider.getFlashcards(deckDoc.$id);
+      for (final flashcardDoc in flashcards) {
+        await _recallsProvider.create(
+          flashcardId: flashcardDoc.$id,
+          userId: membership.userId,
+          permissions: ['team:$teamId'],
+        );
+      }
+    }
+  }
 
   Future<void> joinTeam(Membership membership) async {
     await _teamsProvider.updateMembershipStatus(
