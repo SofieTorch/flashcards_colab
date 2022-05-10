@@ -59,8 +59,10 @@ class DecksProvider {
     );
   }
 
-  Future<List<Document>> getPersonalDecks(
-      {int limit = 10, int offset = 0}) async {
+  Future<List<Document>> getPersonalDecks({
+    int limit = 10,
+    int offset = 0,
+  }) async {
     final deckDocs = await database.listDocuments(
       collectionId: collectionId,
       limit: limit,
@@ -89,5 +91,9 @@ class DecksProvider {
     );
 
     return deckDocs.documents;
+  }
+
+  void dispose() {
+    _subscription.close();
   }
 }

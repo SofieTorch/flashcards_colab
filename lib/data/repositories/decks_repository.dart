@@ -15,6 +15,11 @@ class DecksRepository {
 
   final FutureOr<User> currentUser;
   final DecksProvider _provider;
+  final _controller = StreamController<Deck>();
+
+  Stream<Deck> get decksStream async* {
+    yield* _controller.stream;
+  }
 
   Future<void> createDeck({
     required String title,
@@ -48,17 +53,19 @@ class DecksRepository {
     return decks;
   }
 
-  void subscribeToTeamDecks({
-    required String teamId,
-    required void Function(Deck) onData,
-  }) {
+  void subscribeToTeamDecks({required String teamId}) {
     _provider.subscribeToTeamDecks(
       teamId: teamId,
       onData: (realtimeMessage) {
         final deckDoc = realtimeMessage.toDeckDocument;
-        onData(deckDoc.toDeck);
+        _controller.add(deckDoc.toDeck);
       },
     );
+  }
+
+  void dispose() {
+    _controller.close();
+    _provider.dispose();
   }
 }
 
@@ -88,6 +95,7 @@ extension on RealtimeMessage {
         'name': payload['name'],
         'owner_id': payload['owner_id'],
         'type': payload['type'],
+        'cards_count': payload['cards_count'],
       },
     );
   }

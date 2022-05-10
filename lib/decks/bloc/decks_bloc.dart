@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flashcards_colab/data/repositories/decks_repository.dart';
@@ -16,10 +18,19 @@ class DecksBloc extends Bloc<DecksEvent, DecksState> {
     on<NewDeckTitleChanged>(_onNewDeckTitleChanged);
     on<NewDeckCreated>(_onNewDeckCreated);
     on<SubscriptionRequested>(_onSubscriptionRequested);
+    on<DeckListChanged>(_onDeckListChanged);
   }
 
   final DecksRepository _decksRepository;
+  StreamSubscription<Deck>? _deckStreamSubscription;
   String? teamId;
+
+  @override
+  Future<void> close() {
+    _deckStreamSubscription?.cancel();
+    _decksRepository.dispose();
+    return super.close();
+  }
 
   Future<void> _onDecksRequested(
     DecksRequested event,
@@ -102,21 +113,27 @@ class DecksBloc extends Bloc<DecksEvent, DecksState> {
     SubscriptionRequested event,
     Emitter<DecksState> emit,
   ) {
-    _decksRepository.subscribeToTeamDecks(
-      teamId: teamId!,
-      onData: (retrievedDeck) {
-        final deck = state.decks.firstWhere(
-          (element) => element.id == retrievedDeck.id,
-          orElse: () => Deck.empty,
-        );
+    _decksRepository.subscribeToTeamDecks(teamId: teamId!);
+    _deckStreamSubscription = _decksRepository.decksStream.listen((event) {
+      add(DeckListChanged(event));
+    });
+  }
 
-        if (deck.isNotEmpty) {
-          emit(state.copyWith(decks: state.decks..add(deck)));
-        } else {
-          state.decks[state.decks.indexOf(deck)] = deck;
-          emit(state.copyWith(decks: state.decks));
-        }
-      },
+  void _onDeckListChanged(
+    DeckListChanged event,
+    Emitter<DecksState> emit,
+  ) {
+    final deck = state.decks.firstWhere(
+      (element) => element.id == event.deck.id,
+      orElse: () => Deck.empty,
     );
+
+    if (deck.isEmpty) {
+      emit(state.copyWith(decks: state.decks..add(deck)));
+    } else {
+      final decksCopy = List<Deck>.from(state.decks);
+      decksCopy[decksCopy.indexOf(deck)] = event.deck;
+      emit(state.copyWith(decks: decksCopy));
+    }
   }
 }
