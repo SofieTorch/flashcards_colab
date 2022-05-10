@@ -9,11 +9,12 @@ abstract class DeckEvent extends Equatable {
 
 class FlashcardsRequested extends DeckEvent {}
 
-class NewFlashcardFrontChanged extends DeckEvent {
-  const NewFlashcardFrontChanged(this.front);
+class FlashcardCreated extends DeckEvent {
+  const FlashcardCreated(this.flashcard);
+  final Flashcard flashcard;
+}
 
-  final String front;
-
-  @override
-  List<Object> get props => [front];
+class FlashcardListChanged extends DeckEvent {
+  const FlashcardListChanged(this.flashcard);
+  final Flashcard flashcard;
 }

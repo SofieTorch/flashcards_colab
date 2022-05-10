@@ -2,10 +2,29 @@ import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart';
 
 class FlashcardsProvider {
-  FlashcardsProvider(Client client) : database = Database(client);
+  FlashcardsProvider(Client client)
+      : _realtime = Realtime(client),
+        _database = Database(client) {
+    _subscription = _realtime.subscribe([_channel]);
+  }
 
-  final Database database;
-  final String collectionId = '6259bc53deb082f0bb01';
+  final String _channel = 'collections.6274b3b2ccb704998e68.documents';
+  final String _collectionId = '6274b3b2ccb704998e68';
+  final Database _database;
+  final Realtime _realtime;
+  late RealtimeSubscription _subscription;
+
+  void subscribeToDeckFlashcards({
+    required String deckId,
+    required void Function(RealtimeMessage) onData,
+  }) {
+    _subscription.stream.listen((event) {
+      final docDeckId = event.payload['deck'] as String;
+      if (docDeckId == deckId) {
+        onData(event);
+      }
+    });
+  }
 
   Future<Document> createFlashcard({
     required String front,
@@ -13,13 +32,13 @@ class FlashcardsProvider {
     required String deckId,
     required List<String> permissions,
   }) {
-    return database.createDocument(
-      collectionId: collectionId,
+    return _database.createDocument(
+      collectionId: _collectionId,
       documentId: 'unique()',
       data: <String, dynamic>{
         'front_content': front,
         'back_content': back,
-        'deck_id': deckId,
+        'deck': deckId,
       },
       write: permissions,
       read: permissions,
@@ -27,13 +46,17 @@ class FlashcardsProvider {
   }
 
   Future<List<Document>> getFlashcards(String deckId) async {
-    final docs = await database.listDocuments(
-      collectionId: collectionId,
+    final docs = await _database.listDocuments(
+      collectionId: _collectionId,
       queries: <dynamic>[
-        Query.equal('deck_id', deckId),
+        Query.equal('deck', deckId),
       ],
     );
 
     return docs.documents;
+  }
+
+  void dispose() {
+    _subscription.close();
   }
 }

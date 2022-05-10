@@ -1,26 +1,31 @@
 part of 'deck_bloc.dart';
 
 enum FlashcardsStatus { initial, loading, success, failure }
+enum NewFlashcardStatus { initial, inProgress, success, failure }
 
 class DeckState extends Equatable {
   const DeckState({
-    this.status = FlashcardsStatus.initial,
     required this.deck,
+    this.status = FlashcardsStatus.initial,
+    this.newFlashcardStatus = NewFlashcardStatus.initial,
   });
 
-  final FlashcardsStatus status;
   final Deck deck;
+  final FlashcardsStatus status;
+  final NewFlashcardStatus newFlashcardStatus;
 
   DeckState copyWith({
-    FlashcardsStatus? status,
     Deck? deck,
+    FlashcardsStatus? status,
+    NewFlashcardStatus? newFlashcardStatus,
   }) {
     return DeckState(
       deck: deck ?? this.deck,
       status: status ?? this.status,
+      newFlashcardStatus: newFlashcardStatus ?? this.newFlashcardStatus,
     );
   }
 
   @override
-  List<Object> get props => [deck, status];
+  List<Object> get props => [deck, status, newFlashcardStatus];
 }

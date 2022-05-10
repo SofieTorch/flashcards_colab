@@ -7,15 +7,15 @@ class DecksProvider {
   DecksProvider({
     required Client client,
   })  : _realtime = Realtime(client),
-        database = Database(client) {
+        _database = Database(client) {
     _subscription = _realtime.subscribe([_channel]);
   }
 
   final String _channel = 'collections.6274b3a4b5a85ff61130.documents';
-  final String collectionId = '6274b3a4b5a85ff61130';
+  final String _collectionId = '6274b3a4b5a85ff61130';
   final Realtime _realtime;
+  final Database _database;
   late RealtimeSubscription _subscription;
-  final Database database;
 
   void subscribeToTeamDecks({
     required String teamId,
@@ -33,8 +33,8 @@ class DecksProvider {
   }
 
   Future<void> createPersonalDeck(String title, String userId) async {
-    await database.createDocument(
-      collectionId: collectionId,
+    await _database.createDocument(
+      collectionId: _collectionId,
       documentId: 'unique()',
       write: <String>['user:$userId'],
       read: <String>['user:$userId'],
@@ -46,8 +46,8 @@ class DecksProvider {
   }
 
   Future<void> createTeamDeck(String title, String teamId) async {
-    await database.createDocument(
-      collectionId: collectionId,
+    await _database.createDocument(
+      collectionId: _collectionId,
       documentId: 'unique()',
       write: <String>['team:$teamId'],
       read: <String>['team:$teamId'],
@@ -63,8 +63,8 @@ class DecksProvider {
     int limit = 10,
     int offset = 0,
   }) async {
-    final deckDocs = await database.listDocuments(
-      collectionId: collectionId,
+    final deckDocs = await _database.listDocuments(
+      collectionId: _collectionId,
       limit: limit,
       offset: offset,
       queries: <dynamic>[
@@ -80,8 +80,8 @@ class DecksProvider {
     int limit = 10,
     int offset = 0,
   }) async {
-    final deckDocs = await database.listDocuments(
-      collectionId: collectionId,
+    final deckDocs = await _database.listDocuments(
+      collectionId: _collectionId,
       limit: limit,
       offset: offset,
       queries: <dynamic>[

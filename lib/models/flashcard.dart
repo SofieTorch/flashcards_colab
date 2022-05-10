@@ -17,6 +17,11 @@ class Flashcard extends Equatable {
   final String? id;
   final Recall? recall;
 
+  static const empty = Flashcard();
+
+  bool get isEmpty => this == Flashcard.empty;
+  bool get isNotEmpty => this != Flashcard.empty;
+
   Flashcard copyWith({
     String? front,
     String? back,

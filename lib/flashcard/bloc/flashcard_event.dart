@@ -24,5 +24,3 @@ class FlashcardBackChanged extends FlashcardEvent {
   @override
   List<Object> get props => [back];
 }
-
-class FlashcardCreated extends FlashcardEvent {}

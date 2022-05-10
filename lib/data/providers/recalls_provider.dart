@@ -7,14 +7,14 @@ class RecallsProvider {
   RecallsProvider(Client client) : database = Database(client);
 
   final Database database;
-  final String collectionId = '625a0cbf717403b49d69';
+  final String collectionId = '6274b3c183b8d2814f25';
   final int minHoursForNextStudy = 12;
 
   Future<Document> getRecall(String flashcardId) async {
     final docs = await database.listDocuments(
       collectionId: collectionId,
       queries: <dynamic>[
-        Query.equal('flashcard_id', flashcardId),
+        Query.equal('flashcard', flashcardId),
       ],
     );
 
@@ -26,9 +26,9 @@ class RecallsProvider {
       collectionId: collectionId,
       documentId: 'unique()',
       data: <String, dynamic>{
-        'flashcard_id': flashcardId,
-        'user_id': userId,
-        'last_difference_hours': minHoursForNextStudy,
+        'flashcard': flashcardId,
+        'user': userId,
+        'last_hours_interval': minHoursForNextStudy,
         'next_repetition': DateTime.now()
             .add(Duration(hours: minHoursForNextStudy))
             .millisecondsSinceEpoch,
@@ -46,7 +46,7 @@ class RecallsProvider {
       collectionId: collectionId,
       documentId: id,
       data: <String, dynamic>{
-        'last_difference_hours': nextDifferenceHours,
+        'last_hours_interval': nextDifferenceHours,
         'next_repetition': DateTime.now().add(
           Duration(hours: nextDifferenceHours),
         ),

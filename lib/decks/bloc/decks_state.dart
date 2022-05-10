@@ -8,7 +8,7 @@ class DecksState extends Equatable {
     this.status = DecksStatus.initial,
     this.decks = const <Deck>[],
     this.hasReachedMax = false,
-    this.newDeck = const Deck(title: ''),
+    this.newDeck = Deck.empty,
     this.newDeckStatus = NewDeckStatus.initial,
   });
 

@@ -1,7 +1,5 @@
 import 'package:appwrite/appwrite.dart';
-import 'package:flashcards_colab/data/repositories/authentication_repository.dart';
-import 'package:flashcards_colab/data/repositories/decks_repository.dart';
-import 'package:flashcards_colab/data/repositories/teams_repository.dart';
+import 'package:flashcards_colab/data/repositories/repositories.dart';
 import 'package:flashcards_colab/decks/decks.dart';
 import 'package:flashcards_colab/models/models.dart';
 import 'package:flashcards_colab/team/team.dart';
@@ -21,6 +19,7 @@ class TeamPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final client = context.read<Client>();
+    final currentUser = context.read<AuthenticationRepository>().currentUser;
     return MultiBlocProvider(
       providers: [
         BlocProvider<TeamBloc>(
@@ -36,7 +35,7 @@ class TeamPage extends StatelessWidget {
             teamId: team.id,
             decksRepository: DecksRepository(
               client: client,
-              currentUser: context.read<AuthenticationRepository>().currentUser,
+              currentUser: currentUser,
             ),
           )
             ..add(DecksRequested())

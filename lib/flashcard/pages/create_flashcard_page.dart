@@ -1,6 +1,7 @@
 import 'package:appwrite/appwrite.dart';
 import 'package:flashcards_colab/data/repositories/authentication_repository.dart';
 import 'package:flashcards_colab/data/repositories/flashcards_repository.dart';
+import 'package:flashcards_colab/deck/deck.dart';
 import 'package:flashcards_colab/flashcard/flashcard.dart';
 import 'package:flashcards_colab/models/models.dart';
 import 'package:flutter/material.dart';
@@ -49,14 +50,17 @@ class _CreateButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<FlashcardBloc, FlashcardState>(
+    return BlocBuilder<DeckBloc, DeckState>(
       builder: (context, state) {
-        if (state.status == FlashcardStatus.inProgress) {
+        if (state.newFlashcardStatus == NewFlashcardStatus.inProgress) {
           return const CircularProgressIndicator();
         }
+        final flashcard = context.select<FlashcardBloc, Flashcard>(
+          (value) => value.state.flashcard,
+        );
         return ElevatedButton(
           onPressed: () =>
-              context.read<FlashcardBloc>().add(FlashcardCreated()),
+              context.read<DeckBloc>().add(FlashcardCreated(flashcard)),
           child: const Text('Create'),
         );
       },

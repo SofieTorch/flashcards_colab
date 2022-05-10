@@ -13,7 +13,6 @@ class FlashcardBloc extends Bloc<FlashcardEvent, FlashcardState> {
   }) : super(FlashcardState(flashcard: flashcard)) {
     on<FlashcardFrontChanged>(_onFrontChanged);
     on<FlashcardBackChanged>(_onBackChanged);
-    on<FlashcardCreated>(_onFlashcardCreated);
   }
 
   final FlashcardsRepository flashcardsRepository;
@@ -38,14 +37,5 @@ class FlashcardBloc extends Bloc<FlashcardEvent, FlashcardState> {
         flashcard: state.flashcard.copyWith(back: event.back),
       ),
     );
-  }
-
-  Future<void> _onFlashcardCreated(
-    FlashcardCreated event,
-    Emitter<FlashcardState> emit,
-  ) async {
-    emit(state.copyWith(status: FlashcardStatus.inProgress));
-    await flashcardsRepository.createPersonalFlashcard(state.flashcard);
-    emit(state.copyWith(status: FlashcardStatus.success));
   }
 }

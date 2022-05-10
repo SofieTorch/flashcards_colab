@@ -42,7 +42,10 @@ class _DeckView extends StatelessWidget {
         onPressed: () => Navigator.push(
           context,
           MaterialPageRoute<CreateFlashcardPage>(
-            builder: (context) => CreateFlashcardPage(deckId: deck.id),
+            builder: (_) => BlocProvider<DeckBloc>.value(
+              value: context.read<DeckBloc>(),
+              child: CreateFlashcardPage(deckId: deck.id),
+            ),
           ),
         ),
         child: const Icon(MdiIcons.plus),

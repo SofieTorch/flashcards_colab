@@ -1,6 +1,5 @@
 import 'package:appwrite/appwrite.dart';
-import 'package:flashcards_colab/data/repositories/authentication_repository.dart';
-import 'package:flashcards_colab/data/repositories/decks_repository.dart';
+import 'package:flashcards_colab/data/repositories/repositories.dart';
 import 'package:flashcards_colab/decks/decks.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

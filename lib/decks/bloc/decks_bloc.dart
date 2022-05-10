@@ -22,6 +22,7 @@ class DecksBloc extends Bloc<DecksEvent, DecksState> {
   }
 
   final DecksRepository _decksRepository;
+
   StreamSubscription<Deck>? _deckStreamSubscription;
   String? teamId;
 

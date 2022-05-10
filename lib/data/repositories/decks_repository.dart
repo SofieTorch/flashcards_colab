@@ -72,9 +72,12 @@ class DecksRepository {
 extension on appw_models.Document {
   Deck get toDeck {
     return Deck(
+      id: $id,
       title: data['name'] as String,
       cardsCount: data['cards_count'] as int,
-      id: $id,
+      type: (data['type'] as String) == 'team'
+          ? DeckType.team
+          : DeckType.personal,
     );
   }
 }
