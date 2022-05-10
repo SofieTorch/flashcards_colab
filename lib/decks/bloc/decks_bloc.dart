@@ -9,11 +9,13 @@ part 'decks_state.dart';
 class DecksBloc extends Bloc<DecksEvent, DecksState> {
   DecksBloc({
     required DecksRepository decksRepository,
+    this.teamId,
   })  : _decksRepository = decksRepository,
         super(const DecksState()) {
     on<DecksRequested>(_onDecksRequested);
     on<NewDeckTitleChanged>(_onNewDeckTitleChanged);
     on<NewDeckCreated>(_onNewDeckCreated);
+    on<SubscriptionRequested>(_onSubscriptionRequested);
   }
 
   final DecksRepository _decksRepository;
@@ -26,9 +28,7 @@ class DecksBloc extends Bloc<DecksEvent, DecksState> {
     if (state.hasReachedMax) return;
     try {
       if (state.status == DecksStatus.initial) {
-        final decks = teamId == null
-            ? await _decksRepository.getPersonalDecks()
-            : await _decksRepository.getTeamDecks(teamId: teamId!);
+        final decks = await _decksRepository.getDecks(teamId: teamId);
         return emit(
           state.copyWith(
             status: DecksStatus.success,
@@ -38,14 +38,10 @@ class DecksBloc extends Bloc<DecksEvent, DecksState> {
         );
       }
 
-      final decks = teamId == null
-          ? await _decksRepository.getPersonalDecks(
-              offset: state.decks.length,
-            )
-          : await _decksRepository.getTeamDecks(
-              teamId: teamId!,
-              offset: state.decks.length,
-            );
+      final decks = await _decksRepository.getDecks(
+        teamId: teamId,
+        offset: state.decks.length,
+      );
 
       decks.isEmpty
           ? emit(state.copyWith(hasReachedMax: true))
@@ -84,15 +80,43 @@ class DecksBloc extends Bloc<DecksEvent, DecksState> {
         teamId: teamId,
       );
 
-      emit(
-        state.copyWith(
-          newDeckStatus: NewDeckStatus.success,
-          status: DecksStatus.initial,
-        ),
-      );
-      add(DecksRequested());
+      if (teamId != null) {
+        emit(
+          state.copyWith(
+            newDeckStatus: NewDeckStatus.success,
+            status: DecksStatus.initial,
+          ),
+        );
+        add(DecksRequested());
+      } else {
+        emit(
+          state.copyWith(newDeckStatus: NewDeckStatus.success),
+        );
+      }
     } catch (e) {
       emit(state.copyWith(newDeckStatus: NewDeckStatus.failure));
     }
+  }
+
+  void _onSubscriptionRequested(
+    SubscriptionRequested event,
+    Emitter<DecksState> emit,
+  ) {
+    _decksRepository.subscribeToTeamDecks(
+      teamId: teamId!,
+      onData: (retrievedDeck) {
+        final deck = state.decks.firstWhere(
+          (element) => element.id == retrievedDeck.id,
+          orElse: () => Deck.empty,
+        );
+
+        if (deck.isNotEmpty) {
+          emit(state.copyWith(decks: state.decks..add(deck)));
+        } else {
+          state.decks[state.decks.indexOf(deck)] = deck;
+          emit(state.copyWith(decks: state.decks));
+        }
+      },
+    );
   }
 }

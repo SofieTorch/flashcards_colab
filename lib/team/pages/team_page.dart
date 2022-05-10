@@ -1,5 +1,8 @@
 import 'package:appwrite/appwrite.dart';
+import 'package:flashcards_colab/data/repositories/authentication_repository.dart';
+import 'package:flashcards_colab/data/repositories/decks_repository.dart';
 import 'package:flashcards_colab/data/repositories/teams_repository.dart';
+import 'package:flashcards_colab/decks/decks.dart';
 import 'package:flashcards_colab/models/models.dart';
 import 'package:flashcards_colab/team/team.dart';
 import 'package:flutter/material.dart';
@@ -17,13 +20,29 @@ class TeamPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<TeamBloc>(
-      create: (context) => TeamBloc(
-        team: team,
-        teamsRepository: TeamsRepository(
-          client: context.read<Client>(),
+    final client = context.read<Client>();
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<TeamBloc>(
+          create: (context) => TeamBloc(
+            team: team,
+            teamsRepository: TeamsRepository(
+              client: client,
+            ),
+          ),
         ),
-      ),
+        BlocProvider(
+          create: (context) => DecksBloc(
+            teamId: team.id,
+            decksRepository: DecksRepository(
+              client: client,
+              currentUser: context.read<AuthenticationRepository>().currentUser,
+            ),
+          )
+            ..add(DecksRequested())
+            ..add(const SubscriptionRequested()),
+        ),
+      ],
       child: const _TeamView(),
     );
   }
@@ -36,18 +55,12 @@ class _TeamView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Team')),
-      // floatingActionButton: FloatingActionButton(
-      //   child: const Icon(MdiIcons.plus),
-      //   onPressed: () => showDialog<void>(
-      //     context: context,
-      //     builder: (_) {
-      //       return BlocProvider.value(
-      //         value: context.read<TeamBloc>(),
-      //         child: const NewMemberDialog(),
-      //       );
-      //     },
-      //   ),
-      // ),
+      body: Column(
+        children: const [
+          Text('Decks:'),
+          DeckList(),
+        ],
+      ),
       floatingActionButton: SpeedDial(
         icon: MdiIcons.plus,
         activeIcon: MdiIcons.close,
@@ -71,6 +84,13 @@ class _TeamView extends StatelessWidget {
             elevation: 2.5,
             child: const Icon(MdiIcons.cardMultiple),
             label: 'Create deck',
+            onTap: () => showModalBottomSheet<Widget>(
+              context: context,
+              builder: (_) => BlocProvider<DecksBloc>.value(
+                value: BlocProvider.of<DecksBloc>(context),
+                child: const BottomSheetNewDeck(),
+              ),
+            ),
           ),
         ],
       ),

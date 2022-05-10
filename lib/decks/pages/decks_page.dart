@@ -14,7 +14,7 @@ class DecksPage extends StatelessWidget {
     return BlocProvider(
       create: (context) => DecksBloc(
         decksRepository: DecksRepository(
-          awClient: context.read<Client>(),
+          client: context.read<Client>(),
           currentUser: context.read<AuthenticationRepository>().currentUser,
         ),
       )..add(DecksRequested()),

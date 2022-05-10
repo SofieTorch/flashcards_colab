@@ -21,3 +21,7 @@ class NewDeckTitleChanged extends DecksEvent {
 class NewDeckCreated extends DecksEvent {
   const NewDeckCreated();
 }
+
+class SubscriptionRequested extends DecksEvent {
+  const SubscriptionRequested();
+}

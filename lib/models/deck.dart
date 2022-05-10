@@ -14,6 +14,11 @@ class Deck extends Equatable {
   final String id;
   final List<Flashcard> flashcards;
 
+  static const empty = Deck(title: '');
+
+  bool get isEmpty => this == Deck.empty;
+  bool get isNotEmpty => this != Deck.empty;
+
   Deck copyWith({
     String? title,
     int? cardsCount,

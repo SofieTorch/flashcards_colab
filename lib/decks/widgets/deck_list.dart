@@ -30,6 +30,7 @@ class _DeckListState extends State<DeckList> {
               return const Center(child: Text('Without decks yet'));
             }
             return ListView.builder(
+              shrinkWrap: true,
               itemCount: state.decks.length,
               itemBuilder: (_, index) {
                 return DeckListItem(state.decks[index]);

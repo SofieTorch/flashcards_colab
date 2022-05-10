@@ -22,8 +22,10 @@ class DecksProvider {
     required void Function(RealtimeMessage) onData,
   }) {
     _subscription.stream.listen((event) {
-      final deckDoc = event.payload as Document;
-      final belongsToTeam = deckDoc.$read.contains('team:$teamId');
+      // ignore: use_raw_strings
+      final raw = event.payload['\$read'] as List<dynamic>;
+      final readPermissions = raw.map((dynamic e) => e.toString()).toList();
+      final belongsToTeam = readPermissions.contains('team:$teamId');
       if (belongsToTeam) {
         onData(event);
       }
@@ -55,5 +57,37 @@ class DecksProvider {
         'type': 'team',
       },
     );
+  }
+
+  Future<List<Document>> getPersonalDecks(
+      {int limit = 10, int offset = 0}) async {
+    final deckDocs = await database.listDocuments(
+      collectionId: collectionId,
+      limit: limit,
+      offset: offset,
+      queries: <dynamic>[
+        Query.equal('type', 'personal'),
+      ],
+    );
+
+    return deckDocs.documents;
+  }
+
+  Future<List<Document>> getTeamDecks({
+    required String teamId,
+    int limit = 10,
+    int offset = 0,
+  }) async {
+    final deckDocs = await database.listDocuments(
+      collectionId: collectionId,
+      limit: limit,
+      offset: offset,
+      queries: <dynamic>[
+        Query.equal('type', 'team'),
+        Query.equal('owner_id', teamId),
+      ],
+    );
+
+    return deckDocs.documents;
   }
 }
