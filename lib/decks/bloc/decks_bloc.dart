@@ -129,10 +129,11 @@ class DecksBloc extends Bloc<DecksEvent, DecksState> {
       orElse: () => Deck.empty,
     );
 
+    final decksCopy = List<Deck>.from(state.decks);
     if (deck.isEmpty) {
-      emit(state.copyWith(decks: state.decks..add(deck)));
+      decksCopy.add(event.deck);
+      emit(state.copyWith(decks: decksCopy));
     } else {
-      final decksCopy = List<Deck>.from(state.decks);
       decksCopy[decksCopy.indexOf(deck)] = event.deck;
       emit(state.copyWith(decks: decksCopy));
     }

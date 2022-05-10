@@ -56,7 +56,10 @@ class DeckBloc extends Bloc<DeckEvent, DeckState> {
     Emitter<DeckState> emit,
   ) async {
     emit(state.copyWith(newFlashcardStatus: NewFlashcardStatus.inProgress));
-    await _flashcardsRepository.createPersonalFlashcard(event.flashcard);
+    await _flashcardsRepository.createFlashcard(
+      flashcard: event.flashcard,
+      teamId: state.deck.ownerId,
+    );
     emit(state.copyWith(newFlashcardStatus: NewFlashcardStatus.success));
   }
 
@@ -68,17 +71,20 @@ class DeckBloc extends Bloc<DeckEvent, DeckState> {
       (element) => element.id == event.flashcard.id,
       orElse: () => Flashcard.empty,
     );
-
+    print('Flashcard: $flashcard');
+    final flashcardsCopy = List<Flashcard>.from(state.deck.flashcards);
+    print(flashcardsCopy);
+    print(state.deck.flashcards);
     if (flashcard.isEmpty) {
+      flashcardsCopy.add(event.flashcard);
+      print(flashcardsCopy);
       emit(
         state.copyWith(
-          deck: state.deck.copyWith(
-            flashcards: state.deck.flashcards..add(flashcard),
-          ),
+          deck: state.deck.copyWith(flashcards: flashcardsCopy),
         ),
       );
+      print(state.deck.flashcards);
     } else {
-      final flashcardsCopy = List<Flashcard>.from(state.deck.flashcards);
       flashcardsCopy[flashcardsCopy.indexOf(flashcard)] = event.flashcard;
       emit(
         state.copyWith(

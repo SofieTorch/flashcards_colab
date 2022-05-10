@@ -10,6 +10,7 @@ class Deck extends Equatable {
     this.id = '',
     this.flashcards = const [],
     this.type = DeckType.personal,
+    this.ownerId = '',
   });
 
   final String title;
@@ -17,6 +18,7 @@ class Deck extends Equatable {
   final String id;
   final List<Flashcard> flashcards;
   final DeckType type;
+  final String ownerId;
 
   static const empty = Deck(title: '');
 
@@ -29,6 +31,7 @@ class Deck extends Equatable {
     int? cardsCount,
     List<Flashcard>? flashcards,
     DeckType? type,
+    String? ownerId,
   }) {
     return Deck(
       id: id ?? this.id,
@@ -36,9 +39,17 @@ class Deck extends Equatable {
       cardsCount: cardsCount ?? this.cardsCount,
       flashcards: flashcards ?? this.flashcards,
       type: type ?? this.type,
+      ownerId: ownerId ?? this.ownerId,
     );
   }
 
   @override
-  List<Object?> get props => [title, cardsCount, id, flashcards];
+  List<Object?> get props => [
+        title,
+        cardsCount,
+        id,
+        flashcards,
+        type,
+        ownerId,
+      ];
 }

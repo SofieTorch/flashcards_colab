@@ -78,6 +78,7 @@ extension on appw_models.Document {
       type: (data['type'] as String) == 'team'
           ? DeckType.team
           : DeckType.personal,
+      ownerId: data['owner_id'] as String,
     );
   }
 }

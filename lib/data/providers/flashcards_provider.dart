@@ -56,6 +56,13 @@ class FlashcardsProvider {
     return docs.documents;
   }
 
+  Future<Document> getFlashcard(String flashcardId) {
+    return _database.getDocument(
+      collectionId: _collectionId,
+      documentId: flashcardId,
+    );
+  }
+
   void dispose() {
     _subscription.close();
   }
