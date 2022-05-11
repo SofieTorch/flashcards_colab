@@ -93,9 +93,9 @@ class RecallsProvider {
       documentId: id,
       data: <String, dynamic>{
         'last_hours_interval': nextHoursInterval,
-        'next_repetition': DateTime.now().add(
-          Duration(hours: nextHoursInterval),
-        ),
+        'next_repetition': DateTime.now()
+            .add(Duration(hours: nextHoursInterval))
+            .millisecondsSinceEpoch,
       },
     );
   }
@@ -103,9 +103,9 @@ class RecallsProvider {
   int _getNextDifferenceHours(int last, int weight) {
     if (weight == 0) return minHoursForNextStudy;
 
-    final nextAccumulation = (last * weight) / 2 as int;
+    final nextAccumulation = (last * weight / 2).round();
     return last == minHoursForNextStudy
-        ? minHoursForNextStudy * pow(2, weight) as int
+        ? minHoursForNextStudy * pow(2, weight).round()
         : nextAccumulation;
   }
 
