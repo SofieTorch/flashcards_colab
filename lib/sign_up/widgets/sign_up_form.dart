@@ -30,16 +30,14 @@ class SignUpForm extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(l10n.signInEmailLabel),
+          const Text('Name'),
           _NameInput(),
           Text(l10n.signInEmailLabel),
           _EmailInput(),
           const Padding(padding: EdgeInsets.all(6)),
           Text(l10n.signInPasswordLabel),
           _PasswordInput(),
-          Text(l10n.signInPasswordLabel),
-          _ConfirmedPasswordInput(),
-          const Padding(padding: EdgeInsets.all(12)),
+          const SizedBox(height: 24),
           _LoginButton(),
           const SizedBox(height: 16),
           SizedBox(
@@ -192,7 +190,6 @@ class _LoginButton extends StatelessWidget {
             : SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  key: const Key('loginForm_continue_raisedButton'),
                   onPressed: state.status.isValidated
                       ? () {
                           context
@@ -200,7 +197,7 @@ class _LoginButton extends StatelessWidget {
                               .add(const SignUpSubmitted());
                         }
                       : null,
-                  child: Text(l10n.signInButtonText),
+                  child: const Text('SIGN UP'),
                 ),
               );
       },

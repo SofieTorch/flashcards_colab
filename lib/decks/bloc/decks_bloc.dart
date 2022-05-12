@@ -92,7 +92,7 @@ class DecksBloc extends Bloc<DecksEvent, DecksState> {
         teamId: teamId,
       );
 
-      if (teamId != null) {
+      if (teamId == null) {
         emit(
           state.copyWith(
             newDeckStatus: NewDeckStatus.success,

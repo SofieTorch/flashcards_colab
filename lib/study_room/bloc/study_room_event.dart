@@ -32,3 +32,7 @@ class FlashcardUpdated extends StudyRoomEvent {
 class RoomDeleted extends StudyRoomEvent {
   const RoomDeleted();
 }
+
+class RoomLeft extends StudyRoomEvent {
+  const RoomLeft();
+}

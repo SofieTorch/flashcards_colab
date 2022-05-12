@@ -43,57 +43,91 @@ class _StudyRoomView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<StudyRoomBloc, StudyRoomState>(
-      listener: (context, state) {
-        if (state.deleteRoomStatus == DeleteRoomStatus.success) {
-          Navigator.pop(context);
+    return WillPopScope(
+      onWillPop: () async {
+        if (isHost) {
+          return (await showDialog<bool>(
+                context: context,
+                builder: (_) => BlocProvider<StudyRoomBloc>.value(
+                  value: context.read<StudyRoomBloc>(),
+                  child: const DeleteRoomDialog(),
+                ),
+              )) ??
+              false;
+        } else {
+          return (await showDialog<bool>(
+                context: context,
+                builder: (_) => BlocProvider<StudyRoomBloc>.value(
+                  value: context.read<StudyRoomBloc>(),
+                  child: const LeftRoomDialog(),
+                ),
+              )) ??
+              false;
         }
       },
-      child: Scaffold(
-        body: Stack(
-          children: [
-            BlocBuilder<StudyRoomBloc, StudyRoomState>(
-              builder: (context, state) {
-                if (state.firstFlashcardStatus !=
-                    RetrieveFirstFlashcardStatus.success) {
-                  return const CircularProgressIndicator();
-                }
+      child: BlocListener<StudyRoomBloc, StudyRoomState>(
+        listener: (context, state) {
+          if (state.deleteRoomStatus == DeleteRoomStatus.success) {
+            Navigator.pop(context);
+          }
+        },
+        child: Scaffold(
+          body: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                const SizedBox.expand(),
+                BlocBuilder<StudyRoomBloc, StudyRoomState>(
+                  builder: (context, state) {
+                    if (state.firstFlashcardStatus !=
+                        RetrieveFirstFlashcardStatus.success) {
+                      return const CircularProgressIndicator();
+                    }
 
-                if (state.deckFinished) {
-                  return const Text("You're done for today!");
-                }
+                    if (state.deckFinished) {
+                      return const DeckFinishedMessage();
+                    }
 
-                return Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      FlashcardView(content: state.content),
-                      if (state.content == state.currentFlashcard.front)
-                        ElevatedButton(
-                          onPressed: () => context
-                              .read<StudyRoomBloc>()
-                              .add(const ShowAnswerRequested()),
-                          child: const Text('Show answer'),
-                        )
-                      else
-                        const _AnswerButtons(),
-                    ],
-                  ),
-                );
-              },
-            ),
-            const SizedBox.expand(),
-            if (isHost)
-              Positioned(
-                bottom: 0,
-                right: 0,
-                child: ElevatedButton(
-                  onPressed: () =>
-                      context.read<StudyRoomBloc>().add(const RoomDeleted()),
-                  child: const Text('End study session'),
+                    return Center(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          FlashcardView(content: state.content),
+                          if (state.content == state.currentFlashcard.front)
+                            ElevatedButton(
+                              onPressed: () => context
+                                  .read<StudyRoomBloc>()
+                                  .add(const ShowAnswerRequested()),
+                              child: const Text('Show answer'),
+                            )
+                          else
+                            const _AnswerButtons(),
+                          const SizedBox(height: 22),
+                        ],
+                      ),
+                    );
+                  },
                 ),
-              ),
-          ],
+                if (isHost)
+                  Positioned(
+                    top: 0,
+                    right: 0,
+                    child: ElevatedButton(
+                      onPressed: () => showDialog<bool>(
+                        context: context,
+                        builder: (_) => BlocProvider<StudyRoomBloc>.value(
+                          value: context.read<StudyRoomBloc>(),
+                          child: const DeleteRoomDialog(),
+                        ),
+                      ),
+                      child: const Text('End study session'),
+                    ),
+                  ),
+              ],
+            ),
+          ),
         ),
       ),
     );
@@ -108,7 +142,23 @@ class _AnswerButtons extends StatelessWidget {
     return BlocBuilder<StudyRoomBloc, StudyRoomState>(
       builder: (context, state) {
         if (state.flashcardAnswerStatus == SendFlashcardAnswerStatus.success) {
-          return const AnswerButtonsInactive();
+          return Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Row(
+                children: [
+                  const CircularProgressIndicator(),
+                  const SizedBox(width: 24),
+                  Expanded(
+                    child: Text(
+                      'Please wait until all members respond :)',
+                      style: Theme.of(context).textTheme.headline3,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
         } else {
           return const AnswerButtons();
         }

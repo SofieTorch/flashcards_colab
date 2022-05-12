@@ -40,8 +40,9 @@ class _DeckView extends StatelessWidget {
       ),
       body: Column(
         children: [
-          if (deck.type == DeckType.team) const DeckRoom(),
-          const FlashcardList(),
+          if (deck.type == DeckType.team && deck.flashcards.isNotEmpty)
+            const DeckRoom(),
+          const Expanded(child: FlashcardList()),
         ],
       ),
       floatingActionButton: FloatingActionButton(

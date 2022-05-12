@@ -43,36 +43,3 @@ class AnswerButtons extends StatelessWidget {
     );
   }
 }
-
-class AnswerButtonsInactive extends StatelessWidget {
-  const AnswerButtonsInactive({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return GridView.count(
-      crossAxisSpacing: 14,
-      mainAxisSpacing: 14,
-      crossAxisCount: 2,
-      childAspectRatio: 2.5 / 1,
-      shrinkWrap: true,
-      children: const [
-        AnswerButton(
-          text: 'Forgotten',
-          icon: '❌',
-        ),
-        AnswerButton(
-          text: 'Partially recalled',
-          icon: '🤨',
-        ),
-        AnswerButton(
-          text: 'Recalled with effort',
-          icon: '😌',
-        ),
-        AnswerButton(
-          text: 'Immediately',
-          icon: '🌟',
-        ),
-      ],
-    );
-  }
-}

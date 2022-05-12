@@ -33,7 +33,10 @@ class _DeckListState extends State<DeckList> {
               shrinkWrap: true,
               itemCount: state.decks.length,
               itemBuilder: (_, index) {
-                return DeckListItem(state.decks[index]);
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 6),
+                  child: DeckListItem(state.decks[index]),
+                );
               },
             );
           // ignore: no_default_cases

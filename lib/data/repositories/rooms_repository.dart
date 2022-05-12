@@ -71,6 +71,9 @@ class RoomsRepository {
 
   Future<void> delete(String roomId) => _provider.delete(roomId);
 
+  Future<void> left(Room room) =>
+      _provider.decrementAttendeesCount(room.id, room.attendeesCount);
+
   Future<Room> getByDeck(String deckId) async {
     try {
       final doc = await _provider.getRoomByDeck(deckId);

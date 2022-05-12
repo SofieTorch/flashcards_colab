@@ -8,7 +8,7 @@ class FlashcardView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Card(
-        margin: const EdgeInsets.symmetric(vertical: 36),
+        margin: const EdgeInsets.symmetric(vertical: 24),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
         ),

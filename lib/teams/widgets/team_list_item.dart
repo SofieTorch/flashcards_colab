@@ -34,6 +34,10 @@ class TeamListItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
+                      'Team',
+                      style: Theme.of(context).textTheme.overline,
+                    ),
+                    Text(
                       team.name,
                       style: Theme.of(context).textTheme.headline3,
                     ),

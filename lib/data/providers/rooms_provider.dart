@@ -85,6 +85,19 @@ class RoomsProvider {
     );
   }
 
+  Future<void> decrementAttendeesCount(
+    String roomId,
+    int currentAttendees,
+  ) async {
+    await _database.updateDocument(
+      collectionId: _collectionId,
+      documentId: roomId,
+      data: <String, dynamic>{
+        'attendees_count': currentAttendees - 1,
+      },
+    );
+  }
+
   Future<void> updateAnswersCount(
     String roomId,
     int currentAnswersCount,

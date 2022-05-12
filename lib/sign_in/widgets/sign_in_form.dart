@@ -70,7 +70,6 @@ class _EmailInput extends StatelessWidget {
       buildWhen: (previous, current) => previous.email != current.email,
       builder: (context, state) {
         return TextField(
-          key: const Key('loginForm_emailInput_textField'),
           onChanged: (email) =>
               context.read<SignInBloc>().add(SignInEmailChanged(email)),
           decoration: InputDecoration(
@@ -91,7 +90,6 @@ class _PasswordInput extends StatelessWidget {
       buildWhen: (previous, current) => previous.password != current.password,
       builder: (context, state) {
         return TextField(
-          key: const Key('loginForm_passwordInput_textField'),
           onChanged: (password) =>
               context.read<SignInBloc>().add(SignInPasswordChanged(password)),
           obscureText: true,
@@ -131,7 +129,6 @@ class _LoginButton extends StatelessWidget {
             : SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  key: const Key('loginForm_continue_raisedButton'),
                   onPressed: state.status.isValidated
                       ? () {
                           context

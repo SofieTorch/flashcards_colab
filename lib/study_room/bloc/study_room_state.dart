@@ -4,6 +4,7 @@ enum RetrieveFirstFlashcardStatus { initial, inProgress, success, failure }
 enum SendFlashcardAnswerStatus { initial, inProgress, success, failure }
 enum UpdateFlashcardStatus { initial, inProgress, success, failure }
 enum DeleteRoomStatus { initial, inProgress, success, failure }
+enum LeftRoomStatus { initial, inProgress, success, failure }
 
 class StudyRoomState extends Equatable {
   const StudyRoomState({
@@ -15,6 +16,7 @@ class StudyRoomState extends Equatable {
     this.updateFlashcardStatus = UpdateFlashcardStatus.initial,
     this.firstFlashcardStatus = RetrieveFirstFlashcardStatus.initial,
     this.deleteRoomStatus = DeleteRoomStatus.initial,
+    this.leftRoomStatus = LeftRoomStatus.initial,
     this.deckFinished = false,
   });
 
@@ -27,6 +29,7 @@ class StudyRoomState extends Equatable {
   final UpdateFlashcardStatus updateFlashcardStatus;
   final RetrieveFirstFlashcardStatus firstFlashcardStatus;
   final DeleteRoomStatus deleteRoomStatus;
+  final LeftRoomStatus leftRoomStatus;
 
   StudyRoomState copyWith({
     Room? room,
@@ -38,6 +41,7 @@ class StudyRoomState extends Equatable {
     UpdateFlashcardStatus? updateFlashcardStatus,
     RetrieveFirstFlashcardStatus? firstFlashcardStatus,
     DeleteRoomStatus? deleteRoomStatus,
+    LeftRoomStatus? leftRoomStatus,
   }) {
     return StudyRoomState(
       room: room ?? this.room,
@@ -51,6 +55,7 @@ class StudyRoomState extends Equatable {
           updateFlashcardStatus ?? this.updateFlashcardStatus,
       firstFlashcardStatus: firstFlashcardStatus ?? this.firstFlashcardStatus,
       deleteRoomStatus: deleteRoomStatus ?? this.deleteRoomStatus,
+      leftRoomStatus: leftRoomStatus ?? this.leftRoomStatus,
     );
   }
 
@@ -65,5 +70,6 @@ class StudyRoomState extends Equatable {
         updateFlashcardStatus,
         firstFlashcardStatus,
         deleteRoomStatus,
+        leftRoomStatus,
       ];
 }

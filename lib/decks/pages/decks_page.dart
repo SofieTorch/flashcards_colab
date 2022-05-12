@@ -27,39 +27,45 @@ class _DecksView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        const DeckList(),
-        Positioned(
-          bottom: 16,
-          right: 16,
-          child: FloatingActionButton(
-            onPressed: () => showModalBottomSheet<Widget>(
-              context: context,
-              isScrollControlled: true,
-              builder: (_) => BlocProvider<DecksBloc>.value(
-                value: BlocProvider.of<DecksBloc>(context),
-                child: BlocListener<DecksBloc, DecksState>(
-                  listenWhen: (previous, current) =>
-                      previous.newDeckStatus != current.newDeckStatus,
-                  listener: (context, state) {
-                    if (state.newDeckStatus == NewDeckStatus.success) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Deck created!'),
-                        ),
-                      );
-                      Navigator.pop(context);
-                    }
-                  },
-                  child: const BottomSheetNewDeck(),
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 16,
+        vertical: 8,
+      ),
+      child: Stack(
+        children: [
+          const DeckList(),
+          Positioned(
+            bottom: 16,
+            right: 16,
+            child: FloatingActionButton(
+              onPressed: () => showModalBottomSheet<Widget>(
+                context: context,
+                isScrollControlled: true,
+                builder: (_) => BlocProvider<DecksBloc>.value(
+                  value: BlocProvider.of<DecksBloc>(context),
+                  child: BlocListener<DecksBloc, DecksState>(
+                    listenWhen: (previous, current) =>
+                        previous.newDeckStatus != current.newDeckStatus,
+                    listener: (context, state) {
+                      if (state.newDeckStatus == NewDeckStatus.success) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Deck created!'),
+                          ),
+                        );
+                        Navigator.pop(context);
+                      }
+                    },
+                    child: const BottomSheetNewDeck(),
+                  ),
                 ),
               ),
+              child: const Icon(MdiIcons.plus),
             ),
-            child: const Icon(MdiIcons.plus),
-          ),
-        )
-      ],
+          )
+        ],
+      ),
     );
   }
 }

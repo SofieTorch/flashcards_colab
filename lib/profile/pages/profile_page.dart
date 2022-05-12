@@ -20,14 +20,22 @@ class _ProfileView extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Profile'),
       ),
-      body: Column(
-        children: [
-          TextButton(
-            onPressed: () =>
-                context.read<AuthenticationBloc>().add(AuthLogoutRequested()),
-            child: const Text('Log out'),
-          ),
-        ],
+      body: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              'Your info should be here... soon!',
+              style: Theme.of(context).textTheme.headline3,
+            ),
+            const SizedBox(height: 16),
+            TextButton(
+              onPressed: () =>
+                  context.read<AuthenticationBloc>().add(AuthLogoutRequested()),
+              child: const Text('Log out'),
+            ),
+          ],
+        ),
       ),
     );
   }

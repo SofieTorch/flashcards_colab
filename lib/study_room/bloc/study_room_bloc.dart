@@ -29,6 +29,7 @@ class StudyRoomBloc extends Bloc<StudyRoomEvent, StudyRoomState> {
     on<RoomUpdated>(_onRoomUpdated);
     on<FlashcardUpdated>(_onFlashcardUpdated);
     on<RoomDeleted>(_onRoomDeleted);
+    on<RoomLeft>(_onRoomLeft);
   }
 
   final FlashcardsRepository _flashcardsRepository;
@@ -176,5 +177,14 @@ class StudyRoomBloc extends Bloc<StudyRoomEvent, StudyRoomState> {
     emit(state.copyWith(deleteRoomStatus: DeleteRoomStatus.inProgress));
     await _roomsRepository.delete(state.room.id);
     emit(state.copyWith(deleteRoomStatus: DeleteRoomStatus.success));
+  }
+
+  Future<void> _onRoomLeft(
+    RoomLeft event,
+    Emitter<StudyRoomState> emit,
+  ) async {
+    emit(state.copyWith(leftRoomStatus: LeftRoomStatus.inProgress));
+    await _roomsRepository.left(state.room);
+    emit(state.copyWith(leftRoomStatus: LeftRoomStatus.success));
   }
 }

@@ -53,12 +53,21 @@ class _TeamView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Team')),
-      body: Column(
-        children: const [
-          Text('Decks:'),
-          DeckList(),
-        ],
+      appBar: AppBar(
+        title: Text('${context.read<TeamBloc>().state.team.name} Team'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Decks',
+              style: Theme.of(context).textTheme.headline1,
+            ),
+            const Expanded(child: DeckList()),
+          ],
+        ),
       ),
       floatingActionButton: SpeedDial(
         icon: MdiIcons.plus,

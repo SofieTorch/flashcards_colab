@@ -27,7 +27,18 @@ class _SignUpView extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  const Text('Sign up'),
+                  Column(
+                    children: [
+                      Text(
+                        'Sign up!',
+                        style: Theme.of(context).textTheme.headline1,
+                      ),
+                      Text(
+                        "Let's create an account :)",
+                        style: Theme.of(context).textTheme.subtitle1,
+                      ),
+                    ],
+                  ),
                   BlocProvider<SignUpBloc>(
                     create: (context) {
                       return SignUpBloc(
