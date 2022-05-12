@@ -4,12 +4,13 @@ enum TodayFlashcardsStatus { initial, loading, failure, success }
 enum UpdateRecallStatus { initial, inProgress, failure, success }
 
 class StudyState extends Equatable {
-  const StudyState(
-      {this.flashcards = const <Flashcard>[],
-      this.currentFlashcard = Flashcard.empty,
-      this.status = TodayFlashcardsStatus.initial,
-      this.updateRecallStatus = UpdateRecallStatus.initial,
-      this.flashcardContent = ''});
+  const StudyState({
+    this.flashcards = const <Flashcard>[],
+    this.currentFlashcard = Flashcard.empty,
+    this.status = TodayFlashcardsStatus.initial,
+    this.updateRecallStatus = UpdateRecallStatus.initial,
+    this.flashcardContent = '',
+  });
 
   final List<Flashcard> flashcards;
   final TodayFlashcardsStatus status;

@@ -44,7 +44,13 @@ class StudyBloc extends Bloc<StudyEvent, StudyState> {
     );
 
     final flashcardsCopy = List<Flashcard>.from(state.flashcards)..removeAt(0);
-    final nextFlashcard = flashcardsCopy[0];
+    Flashcard nextFlashcard;
+    try {
+      nextFlashcard = flashcardsCopy[0];
+    } catch (e) {
+      nextFlashcard = Flashcard.empty;
+    }
+
     emit(
       state.copyWith(
         updateRecallStatus: UpdateRecallStatus.success,

@@ -102,14 +102,7 @@ class FlashcardsRepository {
     final docs = await _flashcardsProvider.getFlashcards(deck.id);
 
     for (final doc in docs) {
-      final recallDoc = await _recallsProvider.getRecall(
-        doc.$id,
-        (await currentUser)!.id,
-      );
-      final flashcard = doc.toFlashcard.copyWith(
-        recall: recallDoc.toRecall,
-      );
-
+      final flashcard = await getFlashcard(doc.$id);
       flashcards.add(flashcard);
     }
 
@@ -138,11 +131,37 @@ class FlashcardsRepository {
     required Flashcard flashcard,
     required int weight,
   }) async {
+    final Flashcard flashcardComplete;
+    if (flashcard.recall == null) {
+      final recall = await _recallsProvider.getRecall(
+        flashcard.id!,
+        (await currentUser)!.id,
+      );
+
+      flashcardComplete = flashcard.copyWith(
+        recall: recall.toRecall,
+      );
+    } else {
+      flashcardComplete = flashcard.copyWith();
+    }
+
     await _recallsProvider.update(
-      flashcard.recall!.id,
-      flashcard.recall!.lastDifferenceHours,
+      flashcardComplete.recall!.id,
+      flashcardComplete.recall!.lastDifferenceHours,
       weight,
     );
+  }
+
+  Future<Flashcard> getFlashcard(String flashcardId) async {
+    final flashcardDoc = await _flashcardsProvider.getFlashcard(flashcardId);
+    final flashcard = flashcardDoc.toFlashcard;
+
+    final recallDoc = await _recallsProvider.getRecall(
+      flashcardId,
+      (await currentUser)!.id,
+    );
+
+    return flashcard.copyWith(recall: recallDoc.toRecall);
   }
 
   void dispose() {

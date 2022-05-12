@@ -43,10 +43,10 @@ class DeckBloc extends Bloc<DeckEvent, DeckState> {
     );
 
     if (state.deck.type == DeckType.team) {
-      _flashcardsRepository.subscribeToFlashcards(deckId: state.deck.id);
+      await _flashcardsRepository.subscribeToFlashcards(deckId: state.deck.id);
       _flashcardsSubscription =
-          _flashcardsRepository.flashcardsStream.listen((event) {
-        add(FlashcardListChanged(event));
+          _flashcardsRepository.flashcardsStream.listen((flashcard) {
+        add(FlashcardListChanged(flashcard));
       });
     }
   }
@@ -71,19 +71,16 @@ class DeckBloc extends Bloc<DeckEvent, DeckState> {
       (element) => element.id == event.flashcard.id,
       orElse: () => Flashcard.empty,
     );
-    print('Flashcard: $flashcard');
+
     final flashcardsCopy = List<Flashcard>.from(state.deck.flashcards);
-    print(flashcardsCopy);
-    print(state.deck.flashcards);
+
     if (flashcard.isEmpty) {
       flashcardsCopy.add(event.flashcard);
-      print(flashcardsCopy);
       emit(
         state.copyWith(
           deck: state.deck.copyWith(flashcards: flashcardsCopy),
         ),
       );
-      print(state.deck.flashcards);
     } else {
       flashcardsCopy[flashcardsCopy.indexOf(flashcard)] = event.flashcard;
       emit(

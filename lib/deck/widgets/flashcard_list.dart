@@ -17,6 +17,7 @@ class FlashcardList extends StatelessWidget {
               return const Center(child: Text('Without flashcards yet'));
             }
             return ListView.builder(
+              shrinkWrap: true,
               itemCount: state.deck.flashcards.length,
               itemBuilder: (_, index) {
                 return FlashcardListItem(state.deck.flashcards[index]);

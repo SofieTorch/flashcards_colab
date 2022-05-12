@@ -2,6 +2,7 @@ import 'package:appwrite/appwrite.dart';
 import 'package:flashcards_colab/data/repositories/authentication_repository.dart';
 import 'package:flashcards_colab/data/repositories/flashcards_repository.dart';
 import 'package:flashcards_colab/deck/deck.dart';
+import 'package:flashcards_colab/deck/widgets/deck_room.dart';
 import 'package:flashcards_colab/flashcard/pages/create_flashcard_page.dart';
 import 'package:flashcards_colab/models/models.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +38,12 @@ class _DeckView extends StatelessWidget {
       appBar: AppBar(
         title: Text(deck.title),
       ),
-      body: const FlashcardList(),
+      body: Column(
+        children: [
+          if (deck.type == DeckType.team) const DeckRoom(),
+          const FlashcardList(),
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Navigator.push(
           context,
