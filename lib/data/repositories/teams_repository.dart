@@ -36,8 +36,8 @@ class TeamsRepository {
 
     final teams = <Team>[];
     for (final account in teamAccounts) {
-      final teamDoc = await _databaseProvider.getTeam(account.$id);
-      teams.add(teamDoc.toTeam);
+      final team = await getTeam(account.$id);
+      teams.add(team);
     }
 
     return teams;
@@ -45,7 +45,8 @@ class TeamsRepository {
 
   Future<Team> getTeam(String teamId) async {
     final teamDoc = await _databaseProvider.getTeam(teamId);
-    return teamDoc.toTeam;
+    final teamAccount = await _teamsProvider.getTeam(teamId);
+    return teamDoc.toTeam.copyWith(members: teamAccount.total);
   }
 
   Future<void> addMember(String teamId, String email) async {

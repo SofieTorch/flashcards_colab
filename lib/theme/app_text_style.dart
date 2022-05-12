@@ -11,27 +11,27 @@ abstract class AppFontWeight {
 
 abstract class AppTextStyle {
   static final _bodyTextStyle = GoogleFonts.inter(
-    color: AppColors.mirage,
+    color: AppColors.body,
     fontSize: 16,
     fontWeight: AppFontWeight.regular,
   );
 
   static final _headerTextStyle = GoogleFonts.poppins(
-    color: AppColors.mirage,
-    fontSize: 20,
+    color: AppColors.headline,
+    fontSize: 18,
     fontWeight: AppFontWeight.semibold,
   );
 
   static TextStyle get headline1 {
     return _headerTextStyle.copyWith(
-      fontSize: 28,
+      fontSize: 26,
       letterSpacing: 0.07,
     );
   }
 
   static TextStyle get headline2 {
     return _headerTextStyle.copyWith(
-      fontSize: 24,
+      fontSize: 22,
       letterSpacing: 0.12,
     );
   }
@@ -45,6 +45,7 @@ abstract class AppTextStyle {
   static TextStyle get subtitle1 {
     return _bodyTextStyle.copyWith(
       letterSpacing: 0.03,
+      color: AppColors.body,
     );
   }
 
@@ -59,6 +60,7 @@ abstract class AppTextStyle {
       fontWeight: AppFontWeight.bold,
       fontSize: 14,
       letterSpacing: 0.4,
+      color: AppColors.headline,
     );
   }
 

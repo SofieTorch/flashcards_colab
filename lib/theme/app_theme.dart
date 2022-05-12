@@ -20,21 +20,29 @@ abstract class AppTheme {
     primarySwatch: AppColors.indigo,
     backgroundColor: AppColors.white,
     scaffoldBackgroundColor: AppColors.white,
-    appBarTheme: const AppBarTheme(
-      color: AppColors.white,
-      foregroundColor: AppColors.indigo,
-      iconTheme: IconThemeData(color: AppColors.indigo),
+    appBarTheme: AppBarTheme(
+      color: AppColors.indigo.shade200,
+      foregroundColor: AppColors.headline,
+      iconTheme: const IconThemeData(color: AppColors.headline),
       elevation: 0.5,
     ),
     tabBarTheme: TabBarTheme(
-      unselectedLabelColor: AppColors.indigo.shade300,
-      labelColor: AppColors.indigo,
+      unselectedLabelColor: AppColors.indigo.shade50,
+      labelColor: AppColors.headline,
       labelStyle: lightTextTheme.button,
       unselectedLabelStyle: lightTextTheme.button,
+      indicatorSize: TabBarIndicatorSize.label,
+      indicator: const BoxDecoration(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(18),
+          topRight: Radius.circular(18),
+        ),
+        color: AppColors.white,
+      ),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(AppColors.indigo.shade500),
+        backgroundColor: MaterialStateProperty.all(AppColors.indigo.shade400),
         foregroundColor: MaterialStateProperty.all(AppColors.white),
         elevation: MaterialStateProperty.all(0.5),
         shape: MaterialStateProperty.all(const StadiumBorder()),
@@ -75,7 +83,7 @@ abstract class AppTheme {
     ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: AppColors.grey.shade50,
+      fillColor: AppColors.snuff,
       enabledBorder: OutlineInputBorder(
         borderSide: const BorderSide(color: Colors.transparent),
         borderRadius: BorderRadius.circular(16),
@@ -91,6 +99,14 @@ abstract class AppTheme {
       suffixIconColor: AppColors.malibu,
       hintStyle: AppTextStyle.subtitle1.copyWith(
         color: AppColors.grey.shade400,
+      ),
+    ),
+    bottomSheetTheme: const BottomSheetThemeData(
+      backgroundColor: AppColors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(24),
+        ),
       ),
     ),
   );

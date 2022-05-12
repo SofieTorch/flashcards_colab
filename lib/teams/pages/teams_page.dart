@@ -42,9 +42,15 @@ class _TeamsView extends StatelessWidget {
                 )
               else
                 ListView.builder(
+                  padding: const EdgeInsets.all(16),
                   itemCount: state.teams.length,
                   itemBuilder: (context, index) {
-                    return TeamListItem(state.teams[index]);
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 8,
+                      ),
+                      child: TeamListItem(state.teams[index]),
+                    );
                   },
                 ),
               Positioned(

@@ -9,7 +9,19 @@ class FlashcardListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(8),
-      child: Text(flashcard.front),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Front:',
+            style: Theme.of(context).textTheme.caption,
+          ),
+          Text(
+            flashcard.front,
+            style: Theme.of(context).textTheme.subtitle1,
+          ),
+        ],
+      ),
     );
   }
 }

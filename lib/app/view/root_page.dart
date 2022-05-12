@@ -20,9 +20,25 @@ class RootPage extends StatelessWidget {
           bottom: TabBar(
             indicatorWeight: 4,
             tabs: [
-              Tab(text: l10n.studyTabLabel),
-              Tab(text: l10n.teamsTabLabel),
-              Tab(text: l10n.decksTabLabel),
+              // Tab(height: 36, text: l10n.studyTabLabel),
+              Tab(
+                height: 42,
+                child: Align(
+                  child: Text(l10n.studyTabLabel),
+                ),
+              ),
+              Tab(
+                height: 42,
+                child: Align(
+                  child: Text(l10n.teamsTabLabel),
+                ),
+              ),
+              Tab(
+                height: 42,
+                child: Align(
+                  child: Text(l10n.decksTabLabel),
+                ),
+              ),
             ],
           ),
           actions: [

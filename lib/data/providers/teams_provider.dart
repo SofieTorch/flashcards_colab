@@ -53,4 +53,8 @@ class TeamsProvider {
   Future<void> delete(String teamId) async {
     await teams.delete(teamId: teamId);
   }
+
+  Future<Team> getTeam(String teamId) {
+    return teams.get(teamId: teamId);
+  }
 }

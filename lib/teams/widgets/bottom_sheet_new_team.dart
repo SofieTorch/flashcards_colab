@@ -10,15 +10,24 @@ class BottomSheetNewTeam extends StatelessWidget {
     final mediaQueryData = MediaQuery.of(context);
     return Padding(
       padding: mediaQueryData.viewInsets,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: const [
-          Text('Name:'),
-          _TeamNameInput(),
-          Text('Description:'),
-          _TeamDescriptionInput(),
-          _CreateTeamButtom(),
-        ],
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: const [
+            Text('Name:'),
+            _TeamNameInput(),
+            SizedBox(height: 8),
+            Text('Description:'),
+            _TeamDescriptionInput(),
+            SizedBox(height: 12),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: _CreateTeamButtom(),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -1,36 +1,40 @@
 import 'package:flutter/material.dart';
 
 abstract class AppColors {
-  static const Color white = Color(0xFFF9F9FF);
+  static const Color white = Color(0xFFf4effc);
   static const Color mirage = Color(0xFF181D2E);
-  static const int _indigoBase = 0xFF3A05E1;
-  static const int _malibuBase = 0xFF6e99ff;
+  static const int _malibuBase = 0xFF56608c;
+
+  static const Color headline = Color(0xff1f1235);
+  static const Color body = Color(0xff1b1425);
+
+  static const Color snuff = Color(0xFFe2daeb);
 
   static const indigo = MaterialColor(
-    _indigoBase,
+    0xffff6e6c,
     <int, Color>{
-      50: Color(0xFFEFE6FD),
-      100: Color(0xFFE8E0FF),
-      200: Color(0xFFB697F7),
-      300: Color(0xFF976AF5),
-      400: Color(0xFF6232FA),
-      500: Color(0xFF5D18EF),
-      600: Color(0xFF4F13E9),
-      700: Color(_indigoBase),
-      800: Color(0xFF1200DC),
-      900: Color(0xFF0000D6),
+      50: Color(0xFFffebee),
+      100: Color(0xFFffcdd1),
+      200: Color(0xFFff9996),
+      300: Color(0xffff6e6c),
+      400: Color(0xFFff4843),
+      500: Color(0xFFff278a),
+      600: Color(0xFFf02586),
+      700: Color(0xffd8237e),
+      800: Color(0xFFd8237e),
+      900: Color(0xFFc12279),
     },
   );
 
   static const malibu = MaterialColor(
     _malibuBase,
     <int, Color>{
-      50: Color(0xFFE7F3FF),
-      100: Color(0xFFc7e0ff),
-      200: Color(0xFFa5cdff),
-      300: Color(0xFF87b9ff),
-      400: Color(0xFF76a9ff),
-      500: Color(_malibuBase),
+      50: Color(0xFFe6e8ee),
+      100: Color(0xFFc0c5d6),
+      200: Color(0xFF989fba),
+      300: Color(0xFF727b9f),
+      400: Color(_malibuBase),
+      500: Color(0xFF3b467b),
     },
   );
 
