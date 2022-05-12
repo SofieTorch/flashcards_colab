@@ -21,10 +21,11 @@ abstract class AppTheme {
     backgroundColor: AppColors.white,
     scaffoldBackgroundColor: AppColors.white,
     appBarTheme: AppBarTheme(
-      color: AppColors.indigo.shade200,
+      backgroundColor: AppColors.indigo.shade200,
       foregroundColor: AppColors.headline,
       iconTheme: const IconThemeData(color: AppColors.headline),
-      elevation: 0.5,
+      elevation: 0,
+      shadowColor: Colors.transparent,
     ),
     tabBarTheme: TabBarTheme(
       unselectedLabelColor: AppColors.indigo.shade50,

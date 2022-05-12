@@ -11,18 +11,18 @@ abstract class AppColors {
   static const Color snuff = Color(0xFFe2daeb);
 
   static const indigo = MaterialColor(
-    0xffff6e6c,
+    0xff5039b3,
     <int, Color>{
-      50: Color(0xFFffebee),
-      100: Color(0xFFffcdd1),
-      200: Color(0xFFff9996),
-      300: Color(0xffff6e6c),
-      400: Color(0xFFff4843),
-      500: Color(0xFFff278a),
-      600: Color(0xFFf02586),
-      700: Color(0xffd8237e),
-      800: Color(0xFFd8237e),
-      900: Color(0xFFc12279),
+      50: Color(0xFFece7f6),
+      100: Color(0xFFcec4e9),
+      200: Color(0xFFae9edc),
+      300: Color(0xff8d76ce),
+      400: Color(0xFF7459c4),
+      500: Color(0xFF5a3db9),
+      600: Color(0xFF5039b3),
+      700: Color(0xff4231aa),
+      800: Color(0xFF352ba2),
+      900: Color(0xFF1b2093),
     },
   );
 
