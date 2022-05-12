@@ -2,6 +2,8 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flashcards_colab/data/repositories/teams_repository.dart';
 import 'package:flashcards_colab/models/team.dart';
+import 'package:flashcards_colab/sign_in/models/email.dart';
+import 'package:formz/formz.dart';
 
 part 'team_event.dart';
 part 'team_state.dart';
@@ -20,7 +22,13 @@ class TeamBloc extends Bloc<TeamEvent, TeamState> {
     NewMemberEmailChanged event,
     Emitter<TeamState> emit,
   ) {
-    emit(state.copyWith(newMemberEmail: event.email));
+    final email = Email.dirty(event.email);
+    emit(
+      state.copyWith(
+        newMemberEmail: email,
+        status: Formz.validate([email]),
+      ),
+    );
   }
 
   Future<void> _onNewMemberInvited(
@@ -28,7 +36,7 @@ class TeamBloc extends Bloc<TeamEvent, TeamState> {
     Emitter<TeamState> emit,
   ) async {
     emit(state.copyWith(newMemberStatus: NewMemberStatus.inProgress));
-    await _teamsRepository.addMember(state.team.id, state.newMemberEmail);
+    await _teamsRepository.addMember(state.team.id, state.newMemberEmail.value);
     emit(state.copyWith(newMemberStatus: NewMemberStatus.success));
   }
 }

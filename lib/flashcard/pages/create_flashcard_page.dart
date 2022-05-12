@@ -35,11 +35,21 @@ class _CreateFlashcardView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: const [
-          FlashcardForm(),
-          _CreateButton(),
-        ],
+      body: BlocListener<DeckBloc, DeckState>(
+        listener: (context, state) {
+          if (state.newFlashcardStatus == NewFlashcardStatus.success) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Flashcard created!')),
+            );
+            Navigator.pop(context);
+          }
+        },
+        child: Column(
+          children: const [
+            FlashcardForm(),
+            _CreateButton(),
+          ],
+        ),
       ),
     );
   }

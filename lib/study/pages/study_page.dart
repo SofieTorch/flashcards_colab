@@ -55,7 +55,7 @@ class _StudyView extends StatelessWidget {
                       ),
                     )
                   else
-                    const AnswerButtons(),
+                    const _AnswerButtons(),
                 ],
               );
             }
@@ -64,6 +64,47 @@ class _StudyView extends StatelessWidget {
           },
         ),
       ),
+    );
+  }
+}
+
+class _AnswerButtons extends StatelessWidget {
+  const _AnswerButtons({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView.count(
+      crossAxisSpacing: 14,
+      mainAxisSpacing: 14,
+      crossAxisCount: 2,
+      childAspectRatio: 2.5 / 1,
+      shrinkWrap: true,
+      children: [
+        AnswerButton(
+          onPressed: () =>
+              context.read<StudyBloc>().add(const FlashcardAnswered(0)),
+          text: 'Forgotten',
+          icon: '❌',
+        ),
+        AnswerButton(
+          onPressed: () =>
+              context.read<StudyBloc>().add(const FlashcardAnswered(1)),
+          text: 'Partially recalled',
+          icon: '🤨',
+        ),
+        AnswerButton(
+          onPressed: () =>
+              context.read<StudyBloc>().add(const FlashcardAnswered(2)),
+          text: 'Recalled with effort',
+          icon: '😌',
+        ),
+        AnswerButton(
+          onPressed: () =>
+              context.read<StudyBloc>().add(const FlashcardAnswered(3)),
+          text: 'Immediately',
+          icon: '🌟',
+        ),
+      ],
     );
   }
 }

@@ -62,7 +62,19 @@ class _TeamsView extends StatelessWidget {
                     context: context,
                     builder: (_) => BlocProvider<TeamListBloc>.value(
                       value: BlocProvider.of<TeamListBloc>(context),
-                      child: const BottomSheetNewTeam(),
+                      child: BlocListener<TeamListBloc, TeamListState>(
+                        listenWhen: (previous, current) =>
+                            previous.newTeamStatus != current.newTeamStatus,
+                        listener: (context, state) {
+                          if (state.newTeamStatus == NewTeamStatus.success) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('Team created!')),
+                            );
+                            Navigator.of(context).pop();
+                          }
+                        },
+                        child: const BottomSheetNewTeam(),
+                      ),
                     ),
                   ),
                   child: const Icon(MdiIcons.plus),

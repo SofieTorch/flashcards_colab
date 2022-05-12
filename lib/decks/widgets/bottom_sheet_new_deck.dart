@@ -7,13 +7,25 @@ class BottomSheetNewDeck extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: const [
-        Text("Deck's title:"),
-        _DeckTitleInput(),
-        _CreateDeckButton(),
-      ],
+    final mediaQueryData = MediaQuery.of(context);
+    return Padding(
+      padding: mediaQueryData.viewInsets,
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: const [
+            Text("Deck's title:"),
+            _DeckTitleInput(),
+            SizedBox(height: 12),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: _CreateDeckButton(),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -74,7 +74,23 @@ class _TeamView extends StatelessWidget {
               builder: (_) {
                 return BlocProvider.value(
                   value: context.read<TeamBloc>(),
-                  child: const NewMemberDialog(),
+                  child: BlocListener<TeamBloc, TeamState>(
+                    listenWhen: (previous, current) =>
+                        previous.newMemberStatus != current.newMemberStatus,
+                    listener: (context, state) {
+                      if (state.newMemberStatus == NewMemberStatus.success) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                              "The invitation was sent to the member's email!",
+                            ),
+                          ),
+                        );
+                        Navigator.pop(context);
+                      }
+                    },
+                    child: const NewMemberDialog(),
+                  ),
                 );
               },
             ),
@@ -87,7 +103,16 @@ class _TeamView extends StatelessWidget {
               context: context,
               builder: (_) => BlocProvider<DecksBloc>.value(
                 value: BlocProvider.of<DecksBloc>(context),
-                child: const BottomSheetNewDeck(),
+                child: BlocListener<DecksBloc, DecksState>(
+                  listenWhen: (previous, current) =>
+                      previous.newDeckStatus != current.newDeckStatus,
+                  listener: (context, state) {
+                    if (state.newDeckStatus == NewDeckStatus.success) {
+                      Navigator.pop(context);
+                    }
+                  },
+                  child: const BottomSheetNewDeck(),
+                ),
               ),
             ),
           ),

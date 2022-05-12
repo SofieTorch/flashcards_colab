@@ -35,7 +35,11 @@ class _JoinTeamView extends StatelessWidget {
         child: BlocConsumer<JoinTeamBloc, JoinTeamState>(
           listener: (context, state) {
             if (state.status == JoinTeamStatus.success) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('You are in!')),
+              );
               context.read<AuthenticationBloc>().add(VerifyAuthRequested());
+              Navigator.of(context).maybePop();
             }
           },
           builder: (context, state) {

@@ -36,9 +36,24 @@ class _DecksView extends StatelessWidget {
           child: FloatingActionButton(
             onPressed: () => showModalBottomSheet<Widget>(
               context: context,
+              isScrollControlled: true,
               builder: (_) => BlocProvider<DecksBloc>.value(
                 value: BlocProvider.of<DecksBloc>(context),
-                child: const BottomSheetNewDeck(),
+                child: BlocListener<DecksBloc, DecksState>(
+                  listenWhen: (previous, current) =>
+                      previous.newDeckStatus != current.newDeckStatus,
+                  listener: (context, state) {
+                    if (state.newDeckStatus == NewDeckStatus.success) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Deck created!'),
+                        ),
+                      );
+                      Navigator.pop(context);
+                    }
+                  },
+                  child: const BottomSheetNewDeck(),
+                ),
               ),
             ),
             child: const Icon(MdiIcons.plus),

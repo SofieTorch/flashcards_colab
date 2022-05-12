@@ -120,6 +120,7 @@ class StudyRoomBloc extends Bloc<StudyRoomEvent, StudyRoomState> {
           state.copyWith(
             content: flashcard.front,
             currentFlashcard: flashcard,
+            flashcardAnswerStatus: SendFlashcardAnswerStatus.initial,
           ),
         );
       } else {
